@@ -45,19 +45,25 @@
                         <ul>
                             <li><a class="nav-link scrollto " href="{{ route('beranda') }}">Beranda</a></li>
                             <hr>
-                            <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
-                            <hr>
-                            <li><a class="nav-link scrollto" href="#services">Layanan Kami</a></li>
-                            <hr>
-                            <li>
-                                <a class="nav-link scrollto" href="#portfolio">Portfolio</a>
+                            <li class="dropdown">
+                            <a href="#">
+                                <span>Profil UPT</span> <i class="bi bi-chevron-down"></i>
+                            </a>
+                            <ul>
+                                <li><a class="nav-link scrollto" href="#struktur">Struktur Organisasi</a></li>
+                                <li><a class="nav-link scrollto" href="#tugas">Tugas dan Fungsi</a></li>
+                                <li><a class="nav-link scrollto" href="#visimisi">Visi Misi</a></li>
+                                <li><a class="nav-link scrollto" href="#pegawai">Profil Pegawai</a></li>
+                            </ul>
                             </li>
                             <hr>
-                            <li><a class="nav-link scrollto" href="#team">Team</a></li>
+                            <li><a class="nav-link scrollto" href="#services">Program Kegiatan</a></li>
                             <hr>
-                            <li><a href="{{ route('show-blog') }}">Blog</a></li>
+                            <li>
+                                <a class="nav-link scrollto" href="#portfolio">Kalkulator Produktivitas</a>
+                            </li>
                             <hr>
-                            <li><a class="nav-link scrollto" href="#contact">Kontak</a></li>
+                            <li><a href="{{ route('show-blog') }}">Berita</a></li>
                             <hr>
 
                         </ul>
