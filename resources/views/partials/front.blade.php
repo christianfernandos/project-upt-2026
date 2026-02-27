@@ -27,6 +27,98 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet" />
+
+    <style>
+    /* ============================================================
+       GLOBAL RESPONSIVE & ZOOM-SAFE RULES
+       Menggunakan satuan relatif (%, clamp, em) agar tidak
+       bergeser saat browser di-zoom in/out.
+    ============================================================ */
+
+    /* Reset box model yang konsisten */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* Cegah overflow horizontal di semua level */
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    /* Container Bootstrap: selalu lebar penuh dengan padding aman */
+    .container {
+        width: 100%;
+        padding-right: clamp(12px, 3vw, 24px);
+        padding-left:  clamp(12px, 3vw, 24px);
+    }
+
+    /* Header fixed tidak bergeser saat zoom */
+    #header {
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    /* Navbar: flex-wrap agar tidak overflow saat zoom */
+    #header > div {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+
+    /* Teks judul page-header responsif */
+    .ph-title {
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+        line-height: 1.25;
+        word-break: break-word;
+    }
+
+    /* Card responsif - tidak meluber */
+    .card { max-width: 100%; }
+
+    /* Gambar tidak overflow */
+    img { max-width: 100%; height: auto; }
+
+    /* Tabel responsif */
+    .table-responsive { -webkit-overflow-scrolling: touch; }
+
+    /* Section header global (digunakan di beranda) */
+    .section-header {
+        text-align: center;
+        margin-bottom: clamp(24px, 4vw, 40px);
+    }
+    .section-header p {
+        font-size: clamp(12px, 1.5vw, 14px);
+        font-weight: 700;
+        color: #0d6efd;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+    }
+    .section-header h2 {
+        font-size: clamp(1.5rem, 4vw, 2.4rem);
+        font-weight: 800;
+        color: #1a1a2e;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    /* Breadcrumb Bootstrap override */
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+        color: rgba(255,255,255,0.5);
+    }
+    .breadcrumb-item.active { color: rgba(255,255,255,0.55); }
+
+    /* Back-to-top tetap di pojok kanan bawah */
+    .back-to-top {
+        position: fixed;
+        bottom: clamp(16px, 3vw, 28px);
+        right:  clamp(16px, 3vw, 28px);
+        z-index: 9999;
+    }
+
+    /* Responsive: layar kecil */
+    @media (max-width: 576px) {
+        .container { padding-right: 16px; padding-left: 16px; }
+        .ph-title  { font-size: 1.15rem; }
+    }
+    </style>
 </head>
 
 <body>
@@ -45,36 +137,30 @@
                 border-right: 1px solid rgba(1,41,112,0.08);
                 flex-shrink:0;
             ">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <!-- Ikon bulat -->
-                    <div style="
-                        width:40px; height:40px;
-                        background: linear-gradient(135deg,#1a237e,#1976d2);
-                        border-radius:50%;
-                        display:flex; align-items:center; justify-content:center;
-                        flex-shrink:0;
-                        box-shadow: 0 3px 10px rgba(25,118,210,0.35);
-                    ">
-                        <i class="bi bi-building-fill" style="color:#fff; font-size:18px;"></i>
-                    </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <!-- Logo UPT -->
+                    <img src="{{ asset('asset/img/logo-upt.png') }}" alt="Logo UPT BLP2TK"
+                         style="height:32px;width:auto;flex-shrink:0;object-fit:contain;">
                     <!-- Teks -->
-                    <div style="line-height:1.15;">
+                    <div style="display:flex;flex-direction:column;justify-content:center;">
                         <div style="
                             font-family:'Poppins',sans-serif;
                             font-weight:800;
-                            font-size:17px;
+                            font-size:15px;
                             color:#1a237e;
                             letter-spacing:0.2px;
                             white-space:nowrap;
+                            line-height:1.2;
                         ">UPT BLP2TK <span style="color:#1976d2;">Surabaya</span></div>
                         <div style="
                             font-family:'Poppins',sans-serif;
-                            font-size:9.5px;
+                            font-size:8.5px;
                             font-weight:500;
                             color:#888;
                             letter-spacing:0.6px;
                             text-transform:uppercase;
                             white-space:nowrap;
+                            line-height:1.3;
                         ">Balai Latihan Pengembangan Produktivitas Tenaga Kerja</div>
                     </div>
                 </div>
@@ -101,7 +187,7 @@
                     <hr>
                     <li><a class="{{ Request::routeIs('kalkulator') ? 'active' : '' }}" href="{{ route('kalkulator') }}">Kalkulator Produktivitas</a></li>
                     <hr>
-                    <li><a class="{{ Request::routeIs('show-blog') ? 'active' : '' }}" href="{{ route('show-blog') }}">Berita</a></li>
+                    <li><a class="{{ Request::routeIs('berita','berita.show') ? 'active' : '' }}" href="{{ route('berita') }}">Berita</a></li>
                     <hr>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -129,15 +215,8 @@
                     <!-- Kolom 1: Identitas -->
                     <div class="col-lg-4 col-md-6">
                         <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
-                            <div style="
-                                width:44px; height:44px;
-                                background:linear-gradient(135deg,#1976d2,#42a5f5);
-                                border-radius:50%;
-                                display:flex; align-items:center; justify-content:center;
-                                flex-shrink:0;
-                            ">
-                                <i class="bi bi-building-fill" style="color:#fff; font-size:20px;"></i>
-                            </div>
+                            <img src="{{ asset('asset/img/logo-upt.png') }}" alt="Logo UPT BLP2TK"
+                                 style="height:44px;width:auto;flex-shrink:0;object-fit:contain;mix-blend-mode:screen;">
                             <div>
                                 <div style="font-weight:800; font-size:16px; color:#fff; line-height:1.2;">
                                     UPT BLP2TK <span style="color:#42a5f5;">Surabaya</span>

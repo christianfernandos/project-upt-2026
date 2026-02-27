@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BeritaFrontController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BerandaController;
@@ -27,6 +28,8 @@ Route::get('profil-upt/profil-pegawai',      [ProfilUptFrontController::class, '
 Route::get('program-kegiatan', [ProgramKegiatanFrontController::class, 'index'])->name('program-kegiatan');
 Route::get('kalkulator-produktivitas', [KalkulatorFrontController::class, 'index'])->name('kalkulator');
 Route::get('kontak', [KontakController::class, 'index'])->name('kontak');
+Route::get('berita', [BeritaFrontController::class, 'index'])->name('berita');
+Route::get('berita/{id}', [BeritaFrontController::class, 'show'])->name('berita.show');
 Route::get('show-blog', [ShowBlogController::class, 'index'])->name('show-blog');
 Route::get('read-blog/{slug}', [ShowBlogController::class, 'read'])->name('read-blog');
 

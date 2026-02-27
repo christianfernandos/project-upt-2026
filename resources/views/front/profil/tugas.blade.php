@@ -3,27 +3,21 @@
 @section('content')
 <main id="main">
 
-    <!-- Page Title -->
-    <section class="py-4 bg-light border-bottom">
-        <div class="container">
-            <h3 class="fw-bold mb-0">Tugas dan Fungsi</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('profil-upt') }}">Profil UPT</a></li>
-                    <li class="breadcrumb-item active">Tugas dan Fungsi</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+    @include('partials._page-header', [
+        'title'       => 'Tugas dan Fungsi',
+        'subtitle'    => 'Profil UPT BLP2TK Surabaya',
+        'icon'        => 'bi-briefcase-fill',
+        'gradient'    => 'linear-gradient(135deg, #1a237e 0%, #1565c0 100%)',
+        'breadcrumbs' => [
+            ['label' => 'Beranda',   'url' => route('beranda')],
+            ['label' => 'Profil UPT','url' => route('profil-upt')],
+            ['label' => 'Tugas dan Fungsi', 'url' => '#'],
+        ],
+    ])
 
     <!-- ======= Tugas dan Fungsi ======= -->
     <section class="py-5">
         <div class="container" data-aos="fade-up">
-            <header class="section-header">
-                <p>Tugas dan Fungsi</p>
-                <h2>Tugas dan Fungsi UPT BLP2TK Surabaya</h2>
-            </header>
             <div class="row justify-content-center">
                 <div class="col-lg-9">
                     @if($profil && $profil->tugas_fungsi)

@@ -3,27 +3,21 @@
 @section('content')
 <main id="main">
 
-    <!-- Page Title -->
-    <section class="py-4 bg-light border-bottom">
-        <div class="container">
-            <h3 class="fw-bold mb-0">Struktur Organisasi</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('profil-upt') }}">Profil UPT</a></li>
-                    <li class="breadcrumb-item active">Struktur Organisasi</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+    @include('partials._page-header', [
+        'title'       => 'Struktur Organisasi',
+        'subtitle'    => 'Profil UPT BLP2TK Surabaya',
+        'icon'        => 'bi-diagram-3-fill',
+        'gradient'    => 'linear-gradient(135deg, #1a237e 0%, #1565c0 100%)',
+        'breadcrumbs' => [
+            ['label' => 'Beranda',   'url' => route('beranda')],
+            ['label' => 'Profil UPT','url' => route('profil-upt')],
+            ['label' => 'Struktur Organisasi', 'url' => '#'],
+        ],
+    ])
 
     <!-- ======= Struktur Organisasi ======= -->
     <section class="py-5">
         <div class="container" data-aos="fade-up">
-            <header class="section-header">
-                <p>Struktur Organisasi</p>
-                <h2>Susunan Organisasi UPT BLP2TK Surabaya</h2>
-            </header>
             <div class="text-center">
                 @if($profil && $profil->foto_struktur)
                     <img src="{{ asset('images/profil/' . $profil->foto_struktur) }}"

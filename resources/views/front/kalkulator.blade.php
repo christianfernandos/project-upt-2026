@@ -3,42 +3,20 @@
 @section('content')
 <main id="main">
 
-    <!-- Page Title -->
-    <section class="py-4 bg-light border-bottom">
-        <div class="container">
-            <h3 class="fw-bold mb-0">Kalkulator Produktivitas</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Beranda</a></li>
-                    <li class="breadcrumb-item active">Kalkulator Produktivitas</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+    @include('partials._page-header', [
+        'title'       => 'Kalkulator Produktivitas',
+        'subtitle'    => 'Data Produktivitas Perusahaan',
+        'icon'        => 'bi-calculator-fill',
+        'gradient'    => 'linear-gradient(135deg, #1a237e 0%, #1565c0 100%)',
+        'breadcrumbs' => [
+            ['label' => 'Beranda', 'url' => route('beranda')],
+            ['label' => 'Kalkulator Produktivitas', 'url' => '#'],
+        ],
+    ])
 
     <!-- ======= Tabel Hasil Kalkulator ======= -->
     <section class="py-5">
         <div class="container" data-aos="fade-up">
-
-            <header class="section-header">
-                <p>Hasil Perhitungan Produktivitas</p>
-                <h2>Data Produktivitas Perusahaan</h2>
-            </header>
-
-            <!-- Info Box -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-lg-10">
-                    <div class="alert border-0 shadow-sm d-flex align-items-start gap-3 mb-0"
-                         style="background:#e8f4fd;">
-                        <i class="bi bi-info-circle-fill text-primary mt-1 fs-5"></i>
-                        <div style="font-size:14px; line-height:1.7;">
-                            Halaman ini menampilkan data hasil perhitungan produktivitas tenaga kerja
-                            yang telah diinput oleh tim UPT BLP2TK Surabaya. Data diperbarui secara berkala
-                            sesuai laporan dari perusahaan mitra.
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             @if($kalkulatorList->count() > 0)
 
@@ -181,34 +159,6 @@
                             <span><i class="bi bi-check-circle-fill text-success me-1"></i> <b>Optimal</b>: Jumlah TK sudah ideal</span>
                             <span><i class="bi bi-arrow-up-circle-fill text-danger me-1"></i> <b>Kurang TK</b>: Disarankan menambah tenaga kerja</span>
                             <span><i class="bi bi-arrow-down-circle-fill text-warning me-1"></i> <b>Surplus TK</b>: Jumlah TK melebihi kebutuhan optimal</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Keterangan Metode -->
-            <div class="row justify-content-center mt-4">
-                <div class="col-lg-10">
-                    <div class="card border-0 shadow-sm p-4" style="border-radius:12px;">
-                        <h6 class="fw-bold mb-3">
-                            <i class="bi bi-calculator me-2 text-primary"></i>Metode Perhitungan
-                        </h6>
-                        <div class="row gy-2" style="font-size:13.5px; color:#555; line-height:1.8;">
-                            <div class="col-md-4">
-                                <i class="bi bi-dot text-primary"></i>
-                                <b>Total Omzet Setahun</b><br>
-                                <span class="ms-3">= Jumlah omzet Jan – Des</span>
-                            </div>
-                            <div class="col-md-4">
-                                <i class="bi bi-dot text-primary"></i>
-                                <b>Produktivitas per TK</b><br>
-                                <span class="ms-3">= Total Omzet ÷ Jumlah TK</span>
-                            </div>
-                            <div class="col-md-4">
-                                <i class="bi bi-dot text-primary"></i>
-                                <b>Rekomendasi TK Optimal</b><br>
-                                <span class="ms-3">= Total Omzet ÷ Rp 150.000.000</span>
-                            </div>
                         </div>
                     </div>
                 </div>

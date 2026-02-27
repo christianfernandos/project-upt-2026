@@ -3,28 +3,21 @@
 @section('content')
 <main id="main">
 
-    <!-- Page Title -->
-    <section class="py-4 bg-light border-bottom">
-        <div class="container">
-            <h3 class="fw-bold mb-0">Profil Pegawai</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('profil-upt') }}">Profil UPT</a></li>
-                    <li class="breadcrumb-item active">Profil Pegawai</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+    @include('partials._page-header', [
+        'title'       => 'Profil Pegawai',
+        'subtitle'    => 'Sumber Daya Manusia UPT BLP2TK Surabaya',
+        'icon'        => 'bi-people-fill',
+        'gradient'    => 'linear-gradient(135deg, #1a237e 0%, #1565c0 100%)',
+        'breadcrumbs' => [
+            ['label' => 'Beranda',   'url' => route('beranda')],
+            ['label' => 'Profil UPT','url' => route('profil-upt')],
+            ['label' => 'Profil Pegawai', 'url' => '#'],
+        ],
+    ])
 
     <!-- ======= Profil Pegawai ======= -->
     <section class="py-5">
         <div class="container" data-aos="fade-up">
-            <header class="section-header">
-                <p>Profil Pegawai</p>
-                <h2>Sumber Daya Manusia UPT BLP2TK Surabaya</h2>
-            </header>
-
             @if($pegawaiList->count())
                 <div class="row gy-4 justify-content-center">
                     @foreach($pegawaiList as $pgw)
@@ -62,8 +55,8 @@
                 <a href="{{ route('profil.visimisi') }}" class="btn btn-outline-secondary rounded-pill px-4">
                     <i class="bi bi-arrow-left me-1"></i> Visi dan Misi
                 </a>
-                <a href="{{ route('profil-upt') }}" class="btn btn-outline-primary rounded-pill px-4">
-                    <i class="bi bi-house me-1"></i> Profil UPT
+                <a href="{{ route('program-kegiatan') }}" class="btn btn-outline-primary rounded-pill px-4">
+                    <i class="bi bi-calendar2-check me-1"></i> Program Kegiatan
                 </a>
             </div>
         </div>

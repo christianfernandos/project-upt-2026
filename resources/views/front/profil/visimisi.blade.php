@@ -3,28 +3,21 @@
 @section('content')
 <main id="main">
 
-    <!-- Page Title -->
-    <section class="py-4 bg-light border-bottom">
-        <div class="container">
-            <h3 class="fw-bold mb-0">Visi dan Misi</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('profil-upt') }}">Profil UPT</a></li>
-                    <li class="breadcrumb-item active">Visi dan Misi</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+    @include('partials._page-header', [
+        'title'       => 'Visi dan Misi',
+        'subtitle'    => 'Profil UPT BLP2TK Surabaya',
+        'icon'        => 'bi-eye-fill',
+        'gradient'    => 'linear-gradient(135deg, #1a237e 0%, #1565c0 100%)',
+        'breadcrumbs' => [
+            ['label' => 'Beranda',   'url' => route('beranda')],
+            ['label' => 'Profil UPT','url' => route('profil-upt')],
+            ['label' => 'Visi dan Misi', 'url' => '#'],
+        ],
+    ])
 
     <!-- ======= Visi dan Misi ======= -->
     <section class="py-5">
         <div class="container" data-aos="fade-up">
-            <header class="section-header">
-                <p>Visi dan Misi</p>
-                <h2>Visi dan Misi UPT BLP2TK Surabaya</h2>
-            </header>
-
             <div class="row gy-4 justify-content-center">
                 <!-- Visi -->
                 <div class="col-lg-6" data-aos="fade-right">
