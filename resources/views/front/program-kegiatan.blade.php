@@ -84,9 +84,21 @@
                     $labelKat = $kategoriMap[$program->kategori] ?? ucwords(str_replace('-',' ',$program->kategori));
                 @endphp
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 6) * 80 }}">
-                    <div class="card h-100 border-0 shadow-sm" style="border-radius:16px;overflow:hidden;transition:all 0.3s;"
+                    <div class="card h-100 border-0 shadow-sm" style="border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer;"
                          onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(0,0,0,0.13)'"
-                         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow=''">
+                         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow=''"
+                         onclick="bukaModal(this)"
+                         data-id="{{ $program->id }}"
+                         data-nama="{{ $program->nama_kegiatan }}"
+                         data-kategori="{{ $labelKat }}"
+                         data-durasi="{{ $program->durasi ?? '' }}"
+                         data-peserta="{{ $program->peserta_target ?? '' }}"
+                         data-narasi="{{ e($program->narasi) }}"
+                         data-gradient="{{ $style['gradient'] }}"
+                         data-icon="{{ $style['icon'] }}"
+                         data-badge-bg="{{ $style['badge_bg'] }}"
+                         data-badge-clr="{{ $style['badge_clr'] }}"
+                         data-foto="{{ ($program->foto && file_exists(public_path('images/program/'.$program->foto))) ? asset('images/program/'.$program->foto) : '' }}">
 
                         {{-- Header kartu --}}
                         @if($program->foto && file_exists(public_path('images/program/' . $program->foto)))
@@ -135,6 +147,11 @@
                             <p class="card-text text-muted mt-auto" style="font-size:13px; line-height:1.75;margin:0;">
                                 {{ Str::limit(strip_tags($program->narasi), 180) }}
                             </p>
+
+                            {{-- Klik hint --}}
+                            <div style="margin-top:14px;display:flex;align-items:center;gap:5px;font-size:11.5px;color:#1565c0;font-weight:600;">
+                                <i class="bi bi-arrow-right-circle-fill" style="font-size:14px;"></i> Lihat Detail
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,5 +168,171 @@
         </div>
     </section>
 
+    {{-- ============================================================
+         MODAL DETAIL PROGRAM
+    ============================================================ --}}
+    <div id="modalProgram" style="
+        display:none; position:fixed; inset:0; z-index:9999;
+        background:rgba(10,20,60,0.55); backdrop-filter:blur(4px);
+        align-items:center; justify-content:center; padding:20px;
+    " onclick="tutupModal(event)">
+        <div id="modalBox" style="
+            background:#fff; border-radius:20px; max-width:640px; width:100%;
+            max-height:90vh; overflow-y:auto; position:relative;
+            box-shadow:0 32px 80px rgba(0,0,0,0.28);
+            animation:modalIn 0.25s ease;
+        ">
+            {{-- Header modal (foto atau gradient) --}}
+            <div id="modalHeader" style="height:220px;border-radius:20px 20px 0 0;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">
+                <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.07);pointer-events:none;"></div>
+                <div style="position:absolute;bottom:-30px;left:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.06);pointer-events:none;"></div>
+                <div id="modalHeaderImg" style="display:none;position:absolute;inset:0;">
+                    <img id="modalFoto" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div id="modalHeaderIcon" style="width:72px;height:72px;border-radius:20px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,0.25);position:relative;z-index:1;">
+                    <i id="modalIcon" class="bi" style="font-size:2.2rem;color:#fff;"></i>
+                </div>
+                <span id="modalKategoriHeader" style="font-size:10.5px;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;"></span>
+            </div>
+
+            {{-- Tombol tutup --}}
+            <button onclick="tutupModalBtn()" style="
+                position:absolute;top:14px;right:14px;
+                width:36px;height:36px;border-radius:50%;border:none;
+                background:rgba(255,255,255,0.22);color:#fff;
+                display:flex;align-items:center;justify-content:center;
+                cursor:pointer;font-size:18px;transition:background 0.2s;z-index:10;
+            " onmouseover="this.style.background='rgba(255,255,255,0.38)'"
+               onmouseout="this.style.background='rgba(255,255,255,0.22)'">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            {{-- Body modal --}}
+            <div style="padding:28px 32px 32px;">
+                {{-- Badge + Durasi --}}
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+                    <span id="modalBadge" style="font-size:11px;font-weight:700;padding:4px 14px;border-radius:14px;text-transform:uppercase;letter-spacing:0.5px;"></span>
+                    <span id="modalDurasi" style="display:none;align-items:center;gap:5px;font-size:12px;color:#666;background:#f5f5f5;padding:4px 12px;border-radius:12px;">
+                        <i class="bi bi-clock" style="font-size:12px;color:#1565c0;"></i>
+                        <span id="modalDurasiTxt"></span>
+                    </span>
+                </div>
+
+                {{-- Nama Program --}}
+                <h4 id="modalNama" style="font-weight:800;color:#1a237e;font-size:20px;line-height:1.35;margin-bottom:14px;"></h4>
+
+                {{-- Target Peserta --}}
+                <div id="modalPesertaWrap" style="display:none;align-items:center;gap:8px;background:#e8f0fe;border-radius:10px;padding:10px 16px;margin-bottom:18px;">
+                    <i class="bi bi-people-fill" style="color:#1565c0;font-size:16px;flex-shrink:0;"></i>
+                    <div>
+                        <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.5px;">Target Peserta</div>
+                        <div id="modalPeserta" style="font-size:13.5px;font-weight:600;color:#1565c0;"></div>
+                    </div>
+                </div>
+
+                {{-- Narasi --}}
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Deskripsi Program</div>
+                    <div id="modalNarasi" style="font-size:14px;line-height:1.85;color:#444;white-space:pre-line;"></div>
+                </div>
+
+                {{-- CTA --}}
+                <div style="background:linear-gradient(135deg,#e8f0fe,#fff);border:1px solid #c5d8fa;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:#1a237e;">Tertarik dengan program ini?</div>
+                        <div style="font-size:12px;color:#666;">Hubungi kami untuk informasi lebih lanjut</div>
+                    </div>
+                    <a href="#footer" onclick="tutupModalBtn()" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a237e,#1565c0);color:#fff;padding:9px 20px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(21,101,192,0.3);">
+                        <i class="bi bi-telephone-fill"></i> Hubungi Kami
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
+
+@push('style')
+<style>
+@keyframes modalIn {
+    from { opacity:0; transform:translateY(24px) scale(0.97); }
+    to   { opacity:1; transform:translateY(0)   scale(1); }
+}
+#modalProgram.show { display:flex !important; }
+body.modal-open-prog { overflow:hidden; }
+</style>
+@endpush
+
+@push('js')
+<script>
+function bukaModal(card) {
+    const modal   = document.getElementById('modalProgram');
+    const header  = document.getElementById('modalHeader');
+    const foto    = card.dataset.foto;
+
+    // Header: foto atau gradient+icon
+    if (foto) {
+        document.getElementById('modalFoto').src        = foto;
+        document.getElementById('modalFoto').alt        = card.dataset.nama;
+        document.getElementById('modalHeaderImg').style.display  = 'block';
+        document.getElementById('modalHeaderIcon').style.display = 'none';
+        document.getElementById('modalKategoriHeader').style.display = 'none';
+        header.style.background = '#111';
+    } else {
+        document.getElementById('modalHeaderImg').style.display  = 'none';
+        document.getElementById('modalHeaderIcon').style.display = 'flex';
+        document.getElementById('modalKategoriHeader').style.display = 'block';
+        document.getElementById('modalIcon').className  = 'bi ' + card.dataset.icon;
+        document.getElementById('modalKategoriHeader').textContent = card.dataset.kategori;
+        header.style.background = card.dataset.gradient;
+    }
+
+    // Badge
+    const badge = document.getElementById('modalBadge');
+    badge.textContent        = card.dataset.kategori;
+    badge.style.background   = card.dataset.badgeBg;
+    badge.style.color        = card.dataset.badgeClr;
+
+    // Durasi
+    if (card.dataset.durasi) {
+        document.getElementById('modalDurasi').style.display   = 'inline-flex';
+        document.getElementById('modalDurasiTxt').textContent  = card.dataset.durasi;
+    } else {
+        document.getElementById('modalDurasi').style.display   = 'none';
+    }
+
+    // Nama
+    document.getElementById('modalNama').textContent = card.dataset.nama;
+
+    // Target peserta
+    if (card.dataset.peserta) {
+        document.getElementById('modalPesertaWrap').style.display = 'flex';
+        document.getElementById('modalPeserta').textContent       = card.dataset.peserta;
+    } else {
+        document.getElementById('modalPesertaWrap').style.display = 'none';
+    }
+
+    // Narasi (strip HTML tags)
+    const tmp = document.createElement('div');
+    tmp.innerHTML = card.dataset.narasi;
+    document.getElementById('modalNarasi').textContent = tmp.innerText || tmp.textContent;
+
+    modal.classList.add('show');
+    document.body.classList.add('modal-open-prog');
+}
+
+function tutupModalBtn() {
+    document.getElementById('modalProgram').classList.remove('show');
+    document.body.classList.remove('modal-open-prog');
+}
+
+function tutupModal(e) {
+    if (e.target.id === 'modalProgram') tutupModalBtn();
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') tutupModalBtn();
+});
+</script>
+@endpush
 @endsection

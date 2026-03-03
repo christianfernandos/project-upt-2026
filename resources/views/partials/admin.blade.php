@@ -58,6 +58,17 @@
             color: #1a1a2e !important;
         }
 
+        /* === RESET SIDEBAR GAP (override template) === */
+        .pc-sidebar,
+        .pc-sidebar *,
+        nav.pc-sidebar {
+            box-sizing: border-box;
+        }
+        /* Hapus offset/gap bawaan template di atas sidebar */
+        .pc-sidebar { top: 0 !important; padding-top: 0 !important; }
+        .pc-sidebar > .navbar-wrapper { margin-top: 0 !important; padding-top: 0 !important; }
+        .pc-sidebar .m-header { margin-top: 0 !important; padding-top: 0 !important; }
+
         /* === SIDEBAR === */
         .pc-sidebar {
             background: var(--upt-blue-dark) !important;
@@ -65,10 +76,22 @@
             box-shadow: 4px 0 24px rgba(13,27,75,0.18) !important;
             width: 260px !important;
             min-width: 260px !important;
+            top: 0 !important;
+            left: 0 !important;
+            position: fixed !important;
+            height: 100vh !important;
+            z-index: 1000 !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
         }
         .pc-sidebar .navbar-wrapper {
             background: var(--upt-blue-dark) !important;
             width: 260px !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
         }
         /* Logo area di sidebar */
         .pc-sidebar .m-header {
@@ -80,6 +103,9 @@
             height: 64px !important;
             min-height: 64px !important;
             overflow: hidden !important;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            flex-shrink: 0 !important;
         }
         .pc-sidebar .m-header .b-brand {
             display: flex;
@@ -552,19 +578,6 @@
                             <span class="pc-micon"><i class="ph ph-newspaper"></i></span>
                             <span class="pc-mtext">Berita</span>
                         </a>
-                    </li>
-                    {{-- Blog --}}
-                    <li class="pc-item pc-hasmenu {{ Request::routeIs('blog.*') ? 'active' : '' }}">
-                        <a href="#!" class="pc-link">
-                            <span class="pc-micon"><i class="ph ph-article"></i></span>
-                            <span class="pc-mtext">Blog</span>
-                            <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
-                        </a>
-                        <ul class="pc-submenu">
-                            <li class="pc-item {{ Request::routeIs('blog.*') ? 'active' : '' }}">
-                                <a class="pc-link" href="{{ route('blog.index') }}">Semua Blog</a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>

@@ -22,9 +22,12 @@ class ProgramKegiatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan' => 'required|string',
-            'narasi'        => 'required|string',
-            'foto'          => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'nama_kegiatan'  => 'required|string',
+            'kategori'       => 'required|string',
+            'narasi'         => 'required|string',
+            'durasi'         => 'nullable|string',
+            'peserta_target' => 'nullable|string',
+            'foto'           => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $filename = null;
@@ -35,9 +38,12 @@ class ProgramKegiatanController extends Controller
         }
 
         ProgramKegiatan::create([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'narasi'        => $request->narasi,
-            'foto'          => $filename,
+            'nama_kegiatan'  => $request->nama_kegiatan,
+            'kategori'       => $request->kategori,
+            'narasi'         => $request->narasi,
+            'durasi'         => $request->durasi,
+            'peserta_target' => $request->peserta_target,
+            'foto'           => $filename,
         ]);
 
         return redirect()->route('admin.program-kegiatan.index')->with('toast_success', 'Program kegiatan berhasil ditambahkan');
@@ -53,9 +59,12 @@ class ProgramKegiatanController extends Controller
     {
         $data = ProgramKegiatan::findOrFail($id);
         $request->validate([
-            'nama_kegiatan' => 'required|string',
-            'narasi'        => 'required|string',
-            'foto'          => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'nama_kegiatan'  => 'required|string',
+            'kategori'       => 'required|string',
+            'narasi'         => 'required|string',
+            'durasi'         => 'nullable|string',
+            'peserta_target' => 'nullable|string',
+            'foto'           => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -69,8 +78,11 @@ class ProgramKegiatanController extends Controller
         }
 
         $data->update([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'narasi'        => $request->narasi,
+            'nama_kegiatan'  => $request->nama_kegiatan,
+            'kategori'       => $request->kategori,
+            'narasi'         => $request->narasi,
+            'durasi'         => $request->durasi,
+            'peserta_target' => $request->peserta_target,
         ]);
         if ($request->hasFile('foto')) $data->save();
 

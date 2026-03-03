@@ -92,14 +92,19 @@
             <p style="color:#666;font-size:clamp(13px,1.4vw,15px);max-width:520px;margin:0 auto;">Layanan pelatihan dan pengembangan produktivitas tenaga kerja secara profesional dan terstandar</p>
         </div>
         <div class="row g-4">
-            @php $services=[
+            @php
+            $defaultServices = [
                 ['icon'=>'bi-mortarboard-fill','color'=>'#1a237e','bg'=>'#e8f0fe','title'=>'Pelatihan Berbasis Kompetensi','desc'=>'Program pelatihan terstruktur sesuai Standar Kompetensi Kerja Nasional Indonesia (SKKNI) di berbagai bidang kejuruan.'],
                 ['icon'=>'bi-graph-up-arrow','color'=>'#1b5e20','bg'=>'#e8f5e9','title'=>'Pengukuran Produktivitas','desc'=>'Pengukuran dan analisis produktivitas tenaga kerja perusahaan dengan metode ilmiah untuk mengoptimalkan efisiensi.'],
                 ['icon'=>'bi-patch-check-fill','color'=>'#e65100','bg'=>'#fff3e0','title'=>'Sertifikasi Kompetensi','desc'=>'Fasilitasi uji kompetensi dan sertifikasi resmi bagi tenaga kerja melalui Lembaga Sertifikasi Profesi (LSP) berlisensi.'],
                 ['icon'=>'bi-people-fill','color'=>'#4a148c','bg'=>'#f3e5f5','title'=>'Konsultasi & Bimbingan','desc'=>'Layanan konsultasi dan bimbingan teknis peningkatan produktivitas untuk perusahaan dan lembaga mitra.'],
                 ['icon'=>'bi-laptop','color'=>'#006064','bg'=>'#e0f7fa','title'=>'Pelatihan Digital','desc'=>'Program pelatihan teknologi informasi dan keterampilan digital untuk menghadapi era industri 4.0.'],
                 ['icon'=>'bi-building','color'=>'#b71c1c','bg'=>'#fce4ec','title'=>'Kerjasama Perusahaan','desc'=>'Program magang, rekrutmen, dan kerjasama pelatihan langsung dengan perusahaan dan industri mitra.'],
-            ]; @endphp
+            ];
+            $services = (isset($profil) && is_array($profil->layanan) && count($profil->layanan) > 0)
+                ? $profil->layanan
+                : $defaultServices;
+            @endphp
             @foreach($services as $i => $svc)
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($i%3)*100 }}">
                 <div class="h-100 p-4" style="background:#fff;border-radius:18px;box-shadow:0 2px 20px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04);transition:all 0.3s;"
@@ -117,18 +122,33 @@
 </section>
 
 {{-- ============================================================ TENTANG UPT ============================================================ --}}
+@php
+    $tentangJudul    = $profil->tentang_judul    ?? 'Pusat Pelatihan & Pengembangan';
+    $tentangSubjudul = $profil->tentang_subjudul ?? 'Produktivitas Tenaga Kerja';
+    $tentangDesc1    = $profil->tentang_deskripsi_1 ?? '<b>UPT Balai Latihan Pengembangan Produktivitas Tenaga Kerja (BLP2TK) Surabaya</b> adalah unit pelaksana teknis di bawah Dinas Tenaga Kerja Kota Surabaya yang bertugas memberikan pelatihan, bimbingan, dan pengembangan produktivitas kepada tenaga kerja di wilayah Surabaya dan sekitarnya.';
+    $tentangDesc2    = $profil->tentang_deskripsi_2 ?? 'Kami berkomitmen meningkatkan kualitas dan kompetensi SDM agar mampu bersaing di pasar tenaga kerja nasional maupun global melalui program pelatihan berbasis SKKNI yang terstandar.';
+    $tentangFitur    = (is_array($profil->tentang_fitur) && count($profil->tentang_fitur) > 0)
+        ? $profil->tentang_fitur
+        : ['Pelatihan bersertifikat SKKNI oleh instruktur berpengalaman','Fasilitas workshop dan laboratorium lengkap','Program magang dan penempatan kerja','Konsultasi produktivitas gratis untuk peserta'];
+    $fotoTentang     = $profil->foto_tentang ?? null;
+@endphp
 <section id="about" style="background:#fff;padding:clamp(56px,8vw,96px) 0;">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-5" data-aos="fade-right">
                 <div style="position:relative;">
-                    <img src="{{ asset('asset/img/about.jpg') }}" alt="UPT BLP2TK Surabaya"
-                         style="width:100%;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.12);object-fit:cover;max-height:400px;"
-                         onerror="this.parentNode.querySelector('.fallback-about').style.display='flex';this.style.display='none'">
-                    <div class="fallback-about" style="display:none;width:100%;height:360px;border-radius:24px;background:linear-gradient(135deg,#1a237e,#1565c0);align-items:center;justify-content:center;flex-direction:column;gap:16px;">
-                        <i class="bi bi-building-fill" style="font-size:5rem;color:rgba(255,255,255,0.5);"></i>
-                        <span style="color:rgba(255,255,255,0.7);font-weight:700;font-size:14px;letter-spacing:1px;">UPT BLP2TK SURABAYA</span>
-                    </div>
+                    @if($fotoTentang && file_exists(public_path('images/profil/'.$fotoTentang)))
+                        <img src="{{ asset('images/profil/'.$fotoTentang) }}" alt="UPT BLP2TK Surabaya"
+                             style="width:100%;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.12);object-fit:cover;max-height:400px;">
+                    @else
+                        <img src="{{ asset('asset/img/about.jpg') }}" alt="UPT BLP2TK Surabaya"
+                             style="width:100%;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.12);object-fit:cover;max-height:400px;"
+                             onerror="this.parentNode.querySelector('.fallback-about').style.display='flex';this.style.display='none'">
+                        <div class="fallback-about" style="display:none;width:100%;height:360px;border-radius:24px;background:linear-gradient(135deg,#1a237e,#1565c0);align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+                            <i class="bi bi-building-fill" style="font-size:5rem;color:rgba(255,255,255,0.5);"></i>
+                            <span style="color:rgba(255,255,255,0.7);font-weight:700;font-size:14px;letter-spacing:1px;">UPT BLP2TK SURABAYA</span>
+                        </div>
+                    @endif
                     <div style="position:absolute;bottom:-24px;right:-20px;background:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 12px 40px rgba(0,0,0,0.15);display:flex;align-items:center;gap:12px;min-width:200px;">
                         <div style="width:46px;height:46px;border-radius:12px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <i class="bi bi-patch-check-fill" style="color:#2e7d32;font-size:22px;"></i>
@@ -139,18 +159,14 @@
             </div>
             <div class="col-lg-7 ps-lg-5" data-aos="fade-left" data-aos-delay="150">
                 <span style="background:#e8f0fe;color:#1a73e8;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">Tentang Kami</span>
-                <h2 style="font-family:'Poppins',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#1a1a2e;margin:16px 0 16px;">Pusat Pelatihan &amp; Pengembangan<br><span style="color:#1565c0;">Produktivitas Tenaga Kerja</span></h2>
-                <p style="color:#555;font-size:clamp(13.5px,1.4vw,15px);line-height:1.85;margin-bottom:16px;">
-                    <b>UPT Balai Latihan Pengembangan Produktivitas Tenaga Kerja (BLP2TK) Surabaya</b>
-                    adalah unit pelaksana teknis di bawah Dinas Tenaga Kerja Kota Surabaya yang bertugas memberikan
-                    pelatihan, bimbingan, dan pengembangan produktivitas kepada tenaga kerja di wilayah Surabaya dan sekitarnya.
-                </p>
-                <p style="color:#555;font-size:clamp(13.5px,1.4vw,15px);line-height:1.85;margin-bottom:28px;">
-                    Kami berkomitmen meningkatkan kualitas dan kompetensi SDM agar mampu bersaing di pasar
-                    tenaga kerja nasional maupun global melalui program pelatihan berbasis SKKNI yang terstandar.
-                </p>
+                <h2 style="font-family:'Poppins',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#1a1a2e;margin:16px 0 16px;">
+                    {{ $tentangJudul }}<br>
+                    <span style="color:#1565c0;">{{ $tentangSubjudul }}</span>
+                </h2>
+                <p style="color:#555;font-size:clamp(13.5px,1.4vw,15px);line-height:1.85;margin-bottom:16px;">{!! $tentangDesc1 !!}</p>
+                <p style="color:#555;font-size:clamp(13.5px,1.4vw,15px);line-height:1.85;margin-bottom:28px;">{{ $tentangDesc2 }}</p>
                 <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
-                    @foreach(['Pelatihan bersertifikat SKKNI oleh instruktur berpengalaman','Fasilitas workshop dan laboratorium lengkap','Program magang dan penempatan kerja','Konsultasi produktivitas gratis untuk peserta'] as $item)
+                    @foreach($tentangFitur as $item)
                     <div style="display:flex;align-items:flex-start;gap:12px;">
                         <div style="width:22px;height:22px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
                             <i class="bi bi-check-lg" style="color:#2e7d32;font-size:12px;"></i>
@@ -169,6 +185,17 @@
 </section>
 
 {{-- ============================================================ KEUNGGULAN ============================================================ --}}
+@php
+    $keunggulanList = (is_array($profil->keunggulan) && count($profil->keunggulan) > 0)
+        ? $profil->keunggulan
+        : [
+            ['icon'=>'bi-person-check-fill','title'=>'Instruktur Bersertifikat','desc'=>'Semua instruktur merupakan tenaga ahli bersertifikat kompetensi nasional dengan pengalaman industri nyata.'],
+            ['icon'=>'bi-tools',            'title'=>'Fasilitas Modern',        'desc'=>'Workshop, laboratorium komputer, ruang kelas ber-AC, dan peralatan praktik sesuai standar industri terkini.'],
+            ['icon'=>'bi-shield-check',     'title'=>'Kurikulum Terstandar',    'desc'=>'Kurikulum mengacu pada SKKNI dan kebutuhan dunia industri yang terus diperbarui secara berkala.'],
+            ['icon'=>'bi-briefcase-fill',   'title'=>'Jaringan Industri Luas',  'desc'=>'Kerjasama dengan ratusan perusahaan di Surabaya dan Jawa Timur untuk penempatan alumni peserta.'],
+          ];
+    $colClass = count($keunggulanList) <= 3 ? 'col-md-6 col-lg-4' : 'col-md-6 col-lg-3';
+@endphp
 <section style="background:linear-gradient(135deg,#1a237e 0%,#1565c0 100%);padding:clamp(56px,7vw,88px) 0;position:relative;overflow:hidden;">
     <div aria-hidden="true" style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;"></div>
     <div class="container" data-aos="fade-up">
@@ -177,15 +204,9 @@
             <h2 style="font-family:'Poppins',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#fff;margin:12px 0 8px;">Mengapa Memilih UPT BLP2TK?</h2>
             <p style="color:rgba(255,255,255,0.7);font-size:clamp(13px,1.4vw,15px);">Kepercayaan ribuan tenaga kerja dan perusahaan menjadi bukti komitmen kami</p>
         </div>
-        <div class="row g-4">
-            @php $whys=[
-                ['icon'=>'bi-person-check-fill','title'=>'Instruktur Bersertifikat','desc'=>'Semua instruktur merupakan tenaga ahli bersertifikat kompetensi nasional dengan pengalaman industri nyata.'],
-                ['icon'=>'bi-tools','title'=>'Fasilitas Modern','desc'=>'Workshop, laboratorium komputer, ruang kelas ber-AC, dan peralatan praktik sesuai standar industri terkini.'],
-                ['icon'=>'bi-shield-check','title'=>'Kurikulum Terstandar','desc'=>'Kurikulum mengacu pada SKKNI dan kebutuhan dunia industri yang terus diperbarui secara berkala.'],
-                ['icon'=>'bi-briefcase-fill','title'=>'Jaringan Industri Luas','desc'=>'Kerjasama dengan ratusan perusahaan di Surabaya dan Jawa Timur untuk penempatan alumni peserta.'],
-            ]; @endphp
-            @foreach($whys as $i => $w)
-            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ $i*100 }}">
+        <div class="row g-4 justify-content-center">
+            @foreach($keunggulanList as $i => $w)
+            <div class="{{ $colClass }}" data-aos="fade-up" data-aos-delay="{{ $i*100 }}">
                 <div style="text-align:center;padding:32px 20px;">
                     <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:1px solid rgba(255,255,255,0.15);">
                         <i class="bi {{ $w['icon'] }}" style="font-size:1.8rem;color:#64b5f6;"></i>

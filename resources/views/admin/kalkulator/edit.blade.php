@@ -37,44 +37,60 @@
                                 @error('nama_pt') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Jumlah Tenaga Kerja <span class="text-danger">*</span></label>
-                                <input type="number" name="tenaga_kerja" min="1" class="form-control @error('tenaga_kerja') is-invalid @enderror"
-                                       value="{{ old('tenaga_kerja', $data->tenaga_kerja) }}" required>
-                                @error('tenaga_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <label class="form-label fw-semibold">Alamat Perusahaan <span class="text-danger">*</span></label>
+                                <input type="text" name="alamat_pt" class="form-control @error('alamat_pt') is-invalid @enderror"
+                                       value="{{ old('alamat_pt', $data->alamat_pt) }}" required>
+                                @error('alamat_pt') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Alamat Perusahaan <span class="text-danger">*</span></label>
-                            <textarea name="alamat_pt" rows="2"
-                                      class="form-control @error('alamat_pt') is-invalid @enderror"
-                                      required>{{ old('alamat_pt', $data->alamat_pt) }}</textarea>
-                            @error('alamat_pt') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <hr>
-                        <h6 class="fw-bold mb-3"><i class="ph ph-chart-line me-1"></i> Data Omzet Per Bulan (Rp)</h6>
-                        @php
-                            $bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-                        @endphp
-                        <div class="row">
-                            @foreach($bulan as $i => $namaBulan)
-                            @php $fieldName = 'omzet_'.($i+1); @endphp
-                            <div class="col-md-4 col-lg-3 mb-3">
-                                <label class="form-label fw-semibold">{{ $namaBulan }}</label>
+                        {{-- OMZET --}}
+                        <h6 class="fw-bold mb-3"><i class="ph ph-chart-line me-1"></i> Omzet (Rp)</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Periode 1</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Rp</span>
-                                    <input type="number" name="{{ $fieldName }}" min="0"
-                                           class="form-control @error($fieldName) is-invalid @enderror"
-                                           value="{{ old($fieldName, $data->$fieldName) }}" oninput="hitungTotal()">
+                                    <input type="number" name="omzet_1" min="0"
+                                           class="form-control @error('omzet_1') is-invalid @enderror"
+                                           value="{{ old('omzet_1', $data->omzet_1) }}" oninput="hitungTotal()">
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Periode 2</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" name="omzet_2" min="0"
+                                           class="form-control @error('omzet_2') is-invalid @enderror"
+                                           value="{{ old('omzet_2', $data->omzet_2) }}" oninput="hitungTotal()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        {{-- TENAGA KERJA --}}
+                        <h6 class="fw-bold mb-3"><i class="ph ph-users me-1"></i> Tenaga Kerja</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Periode 1</label>
+                                <input type="number" name="tenaga_kerja" min="1"
+                                       class="form-control @error('tenaga_kerja') is-invalid @enderror"
+                                       value="{{ old('tenaga_kerja', $data->tenaga_kerja) }}" required oninput="hitungTotal()">
+                                @error('tenaga_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Periode 2 <span class="text-muted fw-normal">(opsional)</span></label>
+                                <input type="number" name="tenaga_kerja_2" min="0"
+                                       class="form-control"
+                                       value="{{ old('tenaga_kerja_2') }}" oninput="hitungTotal()">
+                            </div>
                         </div>
 
                         <div class="alert alert-info mt-2">
                             <div class="row text-center">
                                 <div class="col-md-4">
-                                    <div class="fw-bold">Total Omzet Setahun</div>
+                                    <div class="fw-bold">Total Omzet (2 Periode)</div>
                                     <div class="fs-5" id="totalOmzet">Rp {{ number_format($data->total_omzet, 0, ',', '.') }}</div>
                                 </div>
                                 <div class="col-md-4">
@@ -82,8 +98,8 @@
                                     <div class="fs-5" id="prodPerTk">Rp {{ number_format($data->produktivitas_per_tk, 0, ',', '.') }}</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="fw-bold">Rekomendasi TK (± 20%)</div>
-                                    <div class="fs-5" id="rekomendasiTk">{{ $data->rekomendasi_tk > 0 ? '+'.$data->rekomendasi_tk : $data->rekomendasi_tk }}</div>
+                                    <div class="fw-bold">Rekomendasi</div>
+                                    <div class="fs-5" id="rekomendasiTk">-</div>
                                 </div>
                             </div>
                         </div>
@@ -103,20 +119,25 @@
 @push('js')
 <script>
 function hitungTotal() {
-    let total = 0;
-    for (let i = 1; i <= 12; i++) {
-        const val = parseFloat(document.querySelector(`[name="omzet_${i}"]`).value) || 0;
-        total += val;
-    }
+    const omzet1 = parseFloat(document.querySelector('[name="omzet_1"]').value) || 0;
+    const omzet2 = parseFloat(document.querySelector('[name="omzet_2"]').value) || 0;
+    const total  = omzet1 + omzet2;
+
     const tk = parseInt(document.querySelector('[name="tenaga_kerja"]').value) || 1;
     const prodPerTk = total / tk;
-    const rekTambah = Math.round((prodPerTk * 0.2) / prodPerTk);
 
-    document.getElementById('totalOmzet').textContent = 'Rp ' + total.toLocaleString('id-ID');
-    document.getElementById('prodPerTk').textContent = 'Rp ' + Math.round(prodPerTk).toLocaleString('id-ID');
-    document.getElementById('rekomendasiTk').textContent = rekTambah > 0 ? '+' + rekTambah : rekTambah;
+    let rek = '-';
+    if (prodPerTk >= 8333333)      rek = 'Sangat Produktif';
+    else if (prodPerTk >= 5000000) rek = 'Produktif';
+    else if (prodPerTk >= 2500000) rek = 'Cukup Produktif';
+    else if (prodPerTk > 0)        rek = 'Perlu Peningkatan';
+
+    document.getElementById('totalOmzet').textContent  = 'Rp ' + total.toLocaleString('id-ID');
+    document.getElementById('prodPerTk').textContent   = 'Rp ' + Math.round(prodPerTk).toLocaleString('id-ID');
+    document.getElementById('rekomendasiTk').textContent = rek;
 }
 document.querySelector('[name="tenaga_kerja"]')?.addEventListener('input', hitungTotal);
+document.querySelector('[name="tenaga_kerja_2"]')?.addEventListener('input', hitungTotal);
 </script>
 @endpush
 @endsection

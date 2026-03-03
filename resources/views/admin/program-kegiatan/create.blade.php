@@ -29,11 +29,39 @@
                 <div class="card-body">
                     <form action="{{ route('admin.program-kegiatan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Nama Kegiatan <span class="text-danger">*</span></label>
-                            <input type="text" name="nama_kegiatan" class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                   value="{{ old('nama_kegiatan') }}" placeholder="Nama program kegiatan" required>
-                            @error('nama_kegiatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-semibold">Nama Kegiatan <span class="text-danger">*</span></label>
+                                <input type="text" name="nama_kegiatan" class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                       value="{{ old('nama_kegiatan') }}" placeholder="Nama program kegiatan" required>
+                                @error('nama_kegiatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                                <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <option value="pelatihan-kerja"           {{ old('kategori')=='pelatihan-kerja' ? 'selected' : '' }}>Pelatihan Kerja</option>
+                                    <option value="peningkatan-produktivitas" {{ old('kategori')=='peningkatan-produktivitas' ? 'selected' : '' }}>Peningkatan Produktivitas</option>
+                                    <option value="sertifikasi-kompetensi"    {{ old('kategori')=='sertifikasi-kompetensi' ? 'selected' : '' }}>Sertifikasi Kompetensi</option>
+                                    <option value="konsultasi"                {{ old('kategori')=='konsultasi' ? 'selected' : '' }}>Konsultasi Produktivitas</option>
+                                    <option value="magang-industri"           {{ old('kategori')=='magang-industri' ? 'selected' : '' }}>Magang Industri</option>
+                                </select>
+                                @error('kategori') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Durasi</label>
+                                <input type="text" name="durasi" class="form-control @error('durasi') is-invalid @enderror"
+                                       value="{{ old('durasi') }}" placeholder="Contoh: 3 hari, 40 jam">
+                                @error('durasi') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Target Peserta</label>
+                                <input type="text" name="peserta_target" class="form-control @error('peserta_target') is-invalid @enderror"
+                                       value="{{ old('peserta_target') }}" placeholder="Contoh: Karyawan, Pengusaha, Umum">
+                                @error('peserta_target') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Narasi / Deskripsi <span class="text-danger">*</span></label>

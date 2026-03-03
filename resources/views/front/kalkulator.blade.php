@@ -49,15 +49,9 @@
 .dt-wrap .table tbody tr:hover { background: var(--blue-pale); }
 .dt-wrap .table tbody tr:hover td { background: transparent; }
 
-/* ---- CTA ---- */
-.cta-banner { background: linear-gradient(135deg, var(--blue-dark), var(--blue-main)); border-radius: 18px; padding: 44px 40px; color: #fff; position: relative; overflow: hidden; border-left: 5px solid var(--orange-main); }
-.cta-banner::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.05); pointer-events: none; }
-.cta-banner h3 { font-size: 1.6rem !important; font-weight: 800 !important; margin-bottom: 12px !important; }
-.cta-banner p  { font-size: 1rem !important; opacity: .88; margin-bottom: 0 !important; }
+/* ---- BUTTON ---- */
 .btn-cta-orange { background: linear-gradient(135deg,var(--orange-main),var(--orange-dark)); color: #fff; border: none; padding: 13px 28px; border-radius: 12px; font-weight: 700; font-size: .95rem; transition: transform .2s,box-shadow .2s; text-decoration: none; display: inline-block; }
 .btn-cta-orange:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(244,124,32,.45); color: #fff; }
-.btn-cta-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: .93rem; transition: all .2s; text-decoration: none; display: inline-block; }
-.btn-cta-outline:hover { background: rgba(255,255,255,.1); border-color: #fff; color: #fff; }
 </style>
 @endsection
 
@@ -85,41 +79,29 @@
     $totalPerusahaan   = $kalkulatorList->count();
     $totalTK           = $kalkulatorList->sum('tenaga_kerja');
     $rataProduktivitas = $totalPerusahaan > 0 ? $kalkulatorList->avg(fn($k) => $k->produktivitas_per_tk) : 0;
-    $pctOptimal = 0;
-    if ($totalPerusahaan > 0) {
-        $optCount   = $kalkulatorList->filter(fn($k) => $k->rekomendasi_tk == $k->tenaga_kerja)->count();
-        $pctOptimal = round($optCount / $totalPerusahaan * 100);
-    }
 @endphp
 <div class="stat-bar">
     <div class="container">
-        <div class="row g-0">
-            <div class="col-6 col-md-3">
+        <div class="row g-0 justify-content-center">
+            <div class="col-6 col-md-4">
                 <div class="stat-bar-item">
                     <div class="sb-icon"><i class="bi bi-building"></i></div>
                     <div class="sb-val">{{ $totalPerusahaan }}</div>
                     <div class="sb-lbl">Perusahaan Terdaftar</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4">
                 <div class="stat-bar-item">
                     <div class="sb-icon"><i class="bi bi-people-fill"></i></div>
                     <div class="sb-val">{{ number_format($totalTK) }}</div>
                     <div class="sb-lbl">Total Tenaga Kerja</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4">
                 <div class="stat-bar-item">
                     <div class="sb-icon"><i class="bi bi-graph-up-arrow"></i></div>
                     <div class="sb-val">{{ $totalPerusahaan > 0 ? 'Rp '.number_format($rataProduktivitas/1e6,1).'M' : '-' }}</div>
                     <div class="sb-lbl">Rata-rata Produktivitas/TK</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-bar-item">
-                    <div class="sb-icon"><i class="bi bi-check-circle-fill"></i></div>
-                    <div class="sb-val">{{ $pctOptimal }}%</div>
-                    <div class="sb-lbl">Perusahaan Status Optimal</div>
                 </div>
             </div>
         </div>
@@ -230,23 +212,6 @@
 
 @endif
 
-{{-- ---- CTA BANNER ---- --}}
-<div class="cta-banner" data-aos="fade-up">
-    <div class="row align-items-center g-4">
-        <div class="col-lg-7">
-            <h3>Ingin Mengukur Produktivitas Perusahaan Anda?</h3>
-            <p>Tim konsultan produktivitas UPT BLP2TK Surabaya siap membantu pengukuran, analisis, dan pendampingan peningkatan produktivitas tenaga kerja secara profesional dan <strong>gratis</strong> untuk perusahaan di Jawa Timur.</p>
-        </div>
-        <div class="col-lg-5 d-flex flex-wrap gap-3 justify-content-lg-end">
-            <a href="#footer" class="btn-cta-orange">
-                <i class="bi bi-telephone-fill me-2"></i>Hubungi Konsultan
-            </a>
-            <a href="{{ route('program-kegiatan') }}?kategori=konsultasi" class="btn-cta-outline">
-                <i class="bi bi-eye me-2"></i>Lihat Program Konsultasi
-            </a>
-        </div>
-    </div>
-</div>
 
     </div>
 </section>

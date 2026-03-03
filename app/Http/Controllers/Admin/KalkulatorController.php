@@ -25,14 +25,17 @@ class KalkulatorController extends Controller
             'nama_pt'      => 'required|string',
             'alamat_pt'    => 'required|string',
             'tenaga_kerja' => 'required|integer|min:1',
+            'omzet_1'      => 'nullable|numeric|min:0',
+            'omzet_2'      => 'nullable|numeric|min:0',
         ]);
 
-        $omzet = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $omzet["omzet_{$i}"] = (float) ($request->input("omzet_{$i}") ?? 0);
-        }
-
-        Kalkulator::create(array_merge($request->only(['nama_pt','alamat_pt','tenaga_kerja']), $omzet));
+        Kalkulator::create([
+            'nama_pt'      => $request->nama_pt,
+            'alamat_pt'    => $request->alamat_pt,
+            'tenaga_kerja' => $request->tenaga_kerja,
+            'omzet_1'      => (float) ($request->omzet_1 ?? 0),
+            'omzet_2'      => (float) ($request->omzet_2 ?? 0),
+        ]);
 
         return redirect()->route('admin.kalkulator.index')->with('toast_success', 'Data kalkulator berhasil ditambahkan');
     }
@@ -50,14 +53,17 @@ class KalkulatorController extends Controller
             'nama_pt'      => 'required|string',
             'alamat_pt'    => 'required|string',
             'tenaga_kerja' => 'required|integer|min:1',
+            'omzet_1'      => 'nullable|numeric|min:0',
+            'omzet_2'      => 'nullable|numeric|min:0',
         ]);
 
-        $omzet = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $omzet["omzet_{$i}"] = (float) ($request->input("omzet_{$i}") ?? 0);
-        }
-
-        $data->update(array_merge($request->only(['nama_pt','alamat_pt','tenaga_kerja']), $omzet));
+        $data->update([
+            'nama_pt'      => $request->nama_pt,
+            'alamat_pt'    => $request->alamat_pt,
+            'tenaga_kerja' => $request->tenaga_kerja,
+            'omzet_1'      => (float) ($request->omzet_1 ?? 0),
+            'omzet_2'      => (float) ($request->omzet_2 ?? 0),
+        ]);
 
         return redirect()->route('admin.kalkulator.index')->with('toast_success', 'Data kalkulator berhasil diperbarui');
     }

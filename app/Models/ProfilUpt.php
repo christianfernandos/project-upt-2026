@@ -10,4 +10,10 @@ class ProfilUpt extends Model
     use HasFactory;
     protected $table = 'profil_upt';
     protected $guarded = [];
+
+    protected $casts = [
+        'tentang_fitur' => 'array',
+        'keunggulan'    => 'array',
+        'layanan'       => 'array',
+    ];
 }
