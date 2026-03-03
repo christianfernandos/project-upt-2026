@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="{{ asset('asset/img/apple-touch-icon.png') }}" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{{ asset('asset/img/logo-upt.png') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('asset/img/logo-upt.png') }}" />
     <meta name="author" content="UPT BLP2TK Surabaya" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="Login Admin UPT BLP2TK Surabaya" />

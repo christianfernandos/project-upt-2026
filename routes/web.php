@@ -27,6 +27,7 @@ Route::get('profil-upt/visi-misi',           [ProfilUptFrontController::class, '
 Route::get('profil-upt/profil-pegawai',      [ProfilUptFrontController::class, 'pegawai'])->name('profil.pegawai');
 Route::get('program-kegiatan', [ProgramKegiatanFrontController::class, 'index'])->name('program-kegiatan');
 Route::get('kalkulator-produktivitas', [KalkulatorFrontController::class, 'index'])->name('kalkulator');
+Route::get('kalkulator-produktivitas/{id}/cetak-pdf', [KalkulatorFrontController::class, 'cetakPdf'])->name('kalkulator.cetak-pdf');
 Route::get('kontak', [KontakController::class, 'index'])->name('kontak');
 Route::get('berita', [BeritaFrontController::class, 'index'])->name('berita');
 Route::get('berita/{id}', [BeritaFrontController::class, 'show'])->name('berita.show');

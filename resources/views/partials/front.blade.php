@@ -10,7 +10,9 @@
     <meta content="UPT BLP2TK, Balai Latihan, Produktivitas, Tenaga Kerja, Surabaya" name="keywords" />
 
     <!-- Favicons -->
-    <link rel="shortcut icon" type="image/x-icon" href="/asset/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="{{ asset('asset/img/logo-upt.png') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('asset/img/logo-upt.png') }}" />
+    <link rel="apple-touch-icon" href="{{ asset('asset/img/logo-upt.png') }}" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,6 +73,10 @@
     img  { max-width: 100%; height: auto; }
     .card { max-width: 100%; }
     .table-responsive { -webkit-overflow-scrolling: touch; }
+
+    /* Hapus gap putih antara header dan konten */
+    #main, main#main { margin-top: 0 !important; padding-top: 0 !important; }
+    .content { background: transparent; }
 
     /* ---- HEADER ---- */
     #header {
@@ -168,20 +174,6 @@
     .ornament-divider .line-blue   { height: 3px; width: 48px; background: var(--clr-blue);   border-radius: 3px; }
     .ornament-divider .line-orange { height: 3px; width: 18px; background: var(--clr-orange);  border-radius: 3px; }
 
-    /* ---- HEADER INSTANSI BAR ---- */
-    .instansi-bar {
-        background: linear-gradient(135deg, var(--clr-blue-dark) 0%, var(--clr-blue) 100%);
-        border-bottom: 3px solid var(--clr-orange);
-        padding: 8px 0;
-    }
-    .instansi-bar a {
-        color: rgba(255,255,255,0.78);
-        font-size: 12px;
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-    .instansi-bar a:hover { color: #ffd28a; }
-
     @media (max-width: 576px) {
         .container { padding-right: 16px; padding-left: 16px; }
         .ph-title  { font-size: 1.15rem; }
@@ -192,48 +184,8 @@
 </head>
 
 <body>
-    <!-- ======= Bar Instansi (Pemprov + Disnaker) ======= -->
-    <div style="background:linear-gradient(135deg,#1a237e 0%,#1565c0 100%);border-bottom:3px solid #f47c20;padding:7px 0;display:none;" class="d-md-block" id="instansi-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-3">
-                <!-- Logo Pemprov Jatim (SVG inline) -->
-                <a href="https://jatimprov.go.id" target="_blank" rel="noopener"
-                   style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(255,255,255,0.82);font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;"
-                   onmouseover="this.style.color='#ffd28a'" onmouseout="this.style.color='rgba(255,255,255,0.82)'">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 72" width="22" height="26" style="flex-shrink:0;">
-                        <path d="M30 2 L56 12 L56 42 Q56 62 30 70 Q4 62 4 42 L4 12 Z" fill="#cc0000" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-                        <polygon points="30,14 33,22 41,22 35,27 37,35 30,30 23,35 25,27 19,22 27,22" fill="#FFD700"/>
-                        <rect x="14" y="50" width="32" height="10" rx="2" fill="rgba(255,255,255,0.85)"/>
-                        <text x="30" y="58.5" text-anchor="middle" font-size="5.5" font-weight="700" fill="#cc0000" font-family="Arial">JAWA TIMUR</text>
-                    </svg>
-                    Pemprov Jawa Timur
-                </a>
-                <span style="color:rgba(255,255,255,0.2);font-size:18px;">|</span>
-                <!-- Logo Disnakertrans Jatim (SVG inline) -->
-                <a href="https://disnakertrans.jatimprov.go.id" target="_blank" rel="noopener"
-                   style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(255,255,255,0.82);font-size:12px;font-weight:600;font-family:'Poppins',sans-serif;"
-                   onmouseover="this.style.color='#ffd28a'" onmouseout="this.style.color='rgba(255,255,255,0.82)'">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 72" width="22" height="26" style="flex-shrink:0;">
-                        <path d="M30 2 L56 12 L56 42 Q56 62 30 70 Q4 62 4 42 L4 12 Z" fill="#0d47a1" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-                        <circle cx="30" cy="35" r="12" fill="none" stroke="#FFD700" stroke-width="3"/>
-                        <circle cx="30" cy="35" r="5"  fill="#FFD700"/>
-                        <rect x="28" y="17" width="4" height="6" rx="2" fill="#FFD700"/>
-                        <rect x="28" y="47" width="4" height="6" rx="2" fill="#FFD700"/>
-                        <rect x="16" y="33" width="6" height="4" rx="2" fill="#FFD700"/>
-                        <rect x="38" y="33" width="6" height="4" rx="2" fill="#FFD700"/>
-                    </svg>
-                    Disnakertrans Jatim
-                </a>
-            </div>
-            <div style="font-size:11.5px;color:rgba(255,255,255,0.6);font-family:'Poppins',sans-serif;">
-                <i class="bi bi-clock me-1"></i>Sen–Jum 07.30–16.00 WIB &nbsp;|&nbsp; <i class="bi bi-telephone me-1"></i>(031) 8415260
-            </div>
-        </div>
-    </div>
-    <script>document.getElementById('instansi-bar').style.display='block';</script>
-
     <!-- ======= Header ======= -->
-    <header id="header" style="padding:0; position:fixed; top:0; left:0; right:0; z-index:999; background:#fff; box-shadow:0 2px 16px rgba(1,41,112,0.08);">
+    <header id="header" style="padding:0; position:fixed; top:0; left:0; right:0; z-index:1000; background:#fff; box-shadow:0 2px 16px rgba(1,41,112,0.08);">
         <div style="display:flex; align-items:center; justify-content:space-between; height:64px; padding:0 32px 0 0;">
 
             <!-- LOGO: pojok kiri — UPT + Pemprov + Disnaker -->
@@ -342,10 +294,7 @@
     </header>
     <!-- End Header -->
 
-    <!-- Spacer agar konten tidak tertutup header fixed -->
-    <div style="height:64px;"></div>
-
-    <div class="content">
+    <div class="content" style="padding-top:64px;">
         @yield('content')
     </div>
 

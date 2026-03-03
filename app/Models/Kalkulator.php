@@ -14,7 +14,7 @@ class Kalkulator extends Model
     public function getTotalOmzetAttribute(): float
     {
         $total = 0;
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             $total += (float) ($this->{"omzet_{$i}"} ?? 0);
         }
         return $total;

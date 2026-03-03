@@ -28,44 +28,50 @@
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('admin.profil-upt.index') }}"
-               class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-buildings fs-3"></i>
-                <span style="font-size:12px;">Profil UPT</span>
+               class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-buildings" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Profil UPT</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('admin.pegawai.index') }}"
-               class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-users fs-3"></i>
-                <span style="font-size:12px;">Pegawai</span>
+               class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-users" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Pegawai</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('admin.program-kegiatan.index') }}"
-               class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-calendar-check fs-3"></i>
-                <span style="font-size:12px;">Program Kegiatan</span>
+               class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-calendar-check" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Program Kegiatan</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('admin.kalkulator.index') }}"
-               class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-calculator fs-3"></i>
-                <span style="font-size:12px;">Kalkulator</span>
+               class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-calculator" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Kalkulator</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('admin.berita.index') }}"
-               class="btn btn-outline-danger w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-newspaper fs-3"></i>
-                <span style="font-size:12px;">Berita</span>
+               class="btn btn-outline-danger w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-newspaper" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Berita</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <a href="{{ route('blog.index') }}"
-               class="btn btn-outline-secondary w-100 d-flex flex-column align-items-center py-3 gap-1">
-                <i class="ph ph-article fs-3"></i>
-                <span style="font-size:12px;">Blog</span>
+               class="btn btn-outline-secondary w-100 d-flex flex-column align-items-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-article" style="font-size:26px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Blog</span>
             </a>
         </div>
     </div>
