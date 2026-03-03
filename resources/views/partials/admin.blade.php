@@ -686,10 +686,31 @@
 
     <script>
         $(document).ready(function() {
-            new DataTable('#example', {
-                responsive: true,
-                scrollX: true
-            });
+            // Hanya init jika belum diinit oleh child view
+            if ($('#example').length && !$.fn.DataTable.isDataTable('#example')) {
+                new DataTable('#example', {
+                    scrollX: true,
+                    autoWidth: false,
+                    columnDefs: [
+                        { targets: -1, responsivePriority: 1, className: 'dt-body-center' },
+                        { targets: 0,  responsivePriority: 2, width: '50px' },
+                        { targets: 1,  responsivePriority: 3, width: '90px' },
+                    ],
+                    language: {
+                        search: "Cari:",
+                        lengthMenu: "_MENU_ entri per halaman",
+                        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                        infoEmpty: "Tidak ada data",
+                        infoFiltered: "(disaring dari _MAX_ total entri)",
+                        paginate: {
+                            first: "&laquo;",
+                            last: "&raquo;",
+                            next: "&rsaquo;",
+                            previous: "&lsaquo;"
+                        }
+                    }
+                });
+            }
         })
     </script>
 

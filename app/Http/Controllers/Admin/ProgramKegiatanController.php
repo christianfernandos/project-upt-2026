@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class ProgramKegiatanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = ProgramKegiatan::latest()->get();
+        $query = ProgramKegiatan::latest();
+        if ($request->filled('search')) {
+            $query->where('nama_kegiatan', 'like', '%' . $request->search . '%')
+                  ->orWhere('kategori', 'like', '%' . $request->search . '%');
+        }
+        $data = $query->paginate(10)->withQueryString();
         return view('admin.program-kegiatan.index', compact('data'));
     }
 
