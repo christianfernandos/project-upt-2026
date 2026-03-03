@@ -41,13 +41,7 @@
                         <i class="bi bi-info-circle"></i> Tentang Kami
                     </a>
                 </div>
-                <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.12);">
-                    <div><div style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#64b5f6;">25+</div><div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">Jenis Pelatihan</div></div>
-                    <div style="width:1px;background:rgba(255,255,255,0.15);"></div>
-                    <div><div style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#64b5f6;">5.000+</div><div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">Alumni Peserta</div></div>
-                    <div style="width:1px;background:rgba(255,255,255,0.15);"></div>
-                    <div><div style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#64b5f6;">20+</div><div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">Tahun Pengalaman</div></div>
-                </div>
+
             </div>
 
             {{-- Ilustrasi --}}

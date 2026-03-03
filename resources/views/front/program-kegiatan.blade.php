@@ -28,6 +28,15 @@
                     'konsultasi'                => ['label' => 'Konsultasi Produktivitas','icon' => 'bi-chat-dots-fill'],
                     'magang-industri'           => ['label' => 'Magang Industri',         'icon' => 'bi-building'],
                 ];
+                // Tambahkan kategori kustom dari DB yang belum ada di daftar bawaan
+                foreach (($kategoriDiDB ?? []) as $kDB) {
+                    if ($kDB && !array_key_exists($kDB, $tabs)) {
+                        $tabs[$kDB] = [
+                            'label' => ucwords(str_replace('-', ' ', $kDB)),
+                            'icon'  => 'bi-tag-fill',
+                        ];
+                    }
+                }
                 @endphp
                 @foreach($tabs as $slug => $tab)
                 @php $isActive = ($aktifKategori === $slug) || ($slug === '' && !$aktifKategori); @endphp

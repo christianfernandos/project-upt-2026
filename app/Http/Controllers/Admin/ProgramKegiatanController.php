@@ -28,7 +28,7 @@ class ProgramKegiatanController extends Controller
     {
         $request->validate([
             'nama_kegiatan'  => 'required|string',
-            'kategori'       => 'required|string',
+            'kategori'       => 'required|string|max:100',
             'narasi'         => 'required|string',
             'durasi'         => 'nullable|string',
             'peserta_target' => 'nullable|string',
@@ -65,7 +65,7 @@ class ProgramKegiatanController extends Controller
         $data = ProgramKegiatan::findOrFail($id);
         $request->validate([
             'nama_kegiatan'  => 'required|string',
-            'kategori'       => 'required|string',
+            'kategori'       => 'required|string|max:100',
             'narasi'         => 'required|string',
             'durasi'         => 'nullable|string',
             'peserta_target' => 'nullable|string',

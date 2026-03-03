@@ -38,15 +38,33 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
-                                <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
+                                @php
+                                    $kategoriDefault = ['pelatihan-kerja','peningkatan-produktivitas','sertifikasi-kompetensi','konsultasi','magang-industri'];
+                                    $oldKategori     = old('kategori', '');
+                                    $isCustom        = $oldKategori !== '' && !in_array($oldKategori, $kategoriDefault);
+                                @endphp
+                                <select id="kategoriSelect" class="form-select @error('kategori') is-invalid @enderror"
+                                        onchange="toggleKategoriLain(this)">
                                     <option value="">-- Pilih Kategori --</option>
-                                    <option value="pelatihan-kerja"           {{ old('kategori')=='pelatihan-kerja' ? 'selected' : '' }}>Pelatihan Kerja</option>
-                                    <option value="peningkatan-produktivitas" {{ old('kategori')=='peningkatan-produktivitas' ? 'selected' : '' }}>Peningkatan Produktivitas</option>
-                                    <option value="sertifikasi-kompetensi"    {{ old('kategori')=='sertifikasi-kompetensi' ? 'selected' : '' }}>Sertifikasi Kompetensi</option>
-                                    <option value="konsultasi"                {{ old('kategori')=='konsultasi' ? 'selected' : '' }}>Konsultasi Produktivitas</option>
-                                    <option value="magang-industri"           {{ old('kategori')=='magang-industri' ? 'selected' : '' }}>Magang Industri</option>
+                                    <option value="pelatihan-kerja"           {{ $oldKategori=='pelatihan-kerja' ? 'selected' : '' }}>Pelatihan Kerja</option>
+                                    <option value="peningkatan-produktivitas" {{ $oldKategori=='peningkatan-produktivitas' ? 'selected' : '' }}>Peningkatan Produktivitas</option>
+                                    <option value="sertifikasi-kompetensi"    {{ $oldKategori=='sertifikasi-kompetensi' ? 'selected' : '' }}>Sertifikasi Kompetensi</option>
+                                    <option value="konsultasi"                {{ $oldKategori=='konsultasi' ? 'selected' : '' }}>Konsultasi Produktivitas</option>
+                                    <option value="magang-industri"           {{ $oldKategori=='magang-industri' ? 'selected' : '' }}>Magang Industri</option>
+                                    <option value="__lain__"                  {{ $isCustom ? 'selected' : '' }}>➕ Kategori Lain...</option>
                                 </select>
-                                @error('kategori') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                {{-- Input kategori kustom --}}
+                                <input type="text" id="kategoriCustomInput" name="kategori"
+                                       class="form-control mt-2 @error('kategori') is-invalid @enderror"
+                                       placeholder="Tulis nama kategori baru..."
+                                       value="{{ $isCustom ? $oldKategori : '' }}"
+                                       style="{{ $isCustom ? '' : 'display:none;' }}">
+                                {{-- Hidden — digunakan saat pilih dari dropdown bawaan --}}
+                                <input type="hidden" id="kategoriHidden" name="kategori"
+                                       value="{{ !$isCustom ? $oldKategori : '' }}"
+                                       {{ $isCustom ? 'disabled' : '' }}>
+                                @error('kategori') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                                <small class="text-muted">Pilih dari daftar atau tambah kategori baru.</small>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -104,6 +122,43 @@ function previewFoto(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function toggleKategoriLain(select) {
+    const customInput  = document.getElementById('kategoriCustomInput');
+    const hiddenInput  = document.getElementById('kategoriHidden');
+
+    if (select.value === '__lain__') {
+        // Tampilkan input teks, aktifkan nama="kategori" di sana
+        customInput.style.display = '';
+        customInput.required = true;
+        customInput.disabled = false;
+        customInput.focus();
+        // Nonaktifkan hidden agar tidak ikut terkirim
+        hiddenInput.disabled = true;
+        hiddenInput.value = '';
+    } else {
+        // Sembunyikan input teks
+        customInput.style.display = 'none';
+        customInput.required = false;
+        customInput.disabled = true;
+        customInput.value = '';
+        // Aktifkan hidden dengan nilai dropdown
+        hiddenInput.disabled = false;
+        hiddenInput.value = select.value;
+    }
+}
+
+// Inisialisasi saat halaman load (untuk kasus old() setelah validasi gagal)
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('kategoriSelect');
+    if (select.value === '__lain__') {
+        toggleKategoriLain(select);
+    } else {
+        // Pastikan hidden sinkron dengan pilihan dropdown
+        document.getElementById('kategoriHidden').value = select.value;
+        document.getElementById('kategoriCustomInput').disabled = true;
+    }
+});
 </script>
 @endpush
 @endsection

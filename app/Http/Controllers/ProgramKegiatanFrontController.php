@@ -22,16 +22,25 @@ class ProgramKegiatanFrontController extends Controller
         $kategoriMap   = $this->kategoriMap;
 
         $query = ProgramKegiatan::latest();
-        if ($kategori && array_key_exists($kategori, $kategoriMap)) {
+        if ($kategori && $kategori !== '') {
             $query->where('kategori', $kategori);
         }
 
-        $programList       = $query->get();
-        $aktifKategori     = $kategori;
-        $labelKategori     = $kategori ? ($kategoriMap[$kategori] ?? 'Program Kegiatan') : 'Semua Program';
+        $programList   = $query->get();
+        $aktifKategori = $kategori;
+
+        // Jika kategori filter tidak ada di map bawaan, tampilkan apa adanya (kapitalisasi)
+        if ($kategori && !array_key_exists($kategori, $kategoriMap)) {
+            $labelKategori = ucwords(str_replace('-', ' ', $kategori));
+        } else {
+            $labelKategori = $kategori ? ($kategoriMap[$kategori] ?? 'Program Kegiatan') : 'Semua Program';
+        }
+
+        // Kumpulkan semua kategori unik dari DB untuk filter dinamis di front-end
+        $kategoriDiDB = ProgramKegiatan::select('kategori')->distinct()->pluck('kategori')->toArray();
 
         return view('front.program-kegiatan', compact(
-            'programList', 'aktifKategori', 'labelKategori', 'kategoriMap'
+            'programList', 'aktifKategori', 'labelKategori', 'kategoriMap', 'kategoriDiDB'
         ));
     }
 }
