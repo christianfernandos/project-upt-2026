@@ -52,21 +52,31 @@
                     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(180px,26vw,320px);height:clamp(180px,26vw,320px);border-radius:50%;background:rgba(255,255,255,0.07);pointer-events:none;"></div>
 
                     {{-- Floating card 1 — di atas logo --}}
-                    <div style="background:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite;align-self:flex-start;margin-left:10px;" data-aos="fade-right" data-aos-delay="600">
+                    <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.60);border-radius:16px;padding:12px 18px;box-shadow:0 0 22px rgba(255,255,255,0.30),0 0 50px rgba(100,181,246,0.25),0 8px 24px rgba(0,0,0,0.20);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite;align-self:flex-start;margin-left:10px;" data-aos="fade-right" data-aos-delay="600">
                         <div style="width:38px;height:38px;border-radius:10px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-award-fill" style="color:#2e7d32;font-size:18px;"></i></div>
-                        <div><div style="font-size:11px;color:#888;margin-bottom:1px;">Sertifikasi</div><div style="font-size:13px;font-weight:700;color:#1a237e;">Berbasis Kompetensi</div></div>
+                        <div><div style="font-size:11px;color:#666;font-weight:500;margin-bottom:1px;">Sertifikasi</div><div style="font-size:13px;font-weight:700;color:#111;">Berbasis Kompetensi</div></div>
                     </div>
 
                     {{-- Logo utama --}}
                     <div style="position:relative;z-index:2;">
-                        <img src="{{ asset('asset/img/logo-upt.png') }}" alt="Logo BLP2TK"
-                             style="max-width:clamp(200px,28vw,360px);width:100%;display:block;mix-blend-mode:multiply;filter:drop-shadow(0 4px 24px rgba(0,0,0,0.15));">
+                        <img src="{{ asset('asset/img/logo-blp2tk.png') }}" alt="Logo BLP2TK"
+                             style="max-width:clamp(200px,28vw,360px);width:100%;display:block;
+                                    mix-blend-mode:normal;
+                                    filter:
+                                        drop-shadow(0 0 8px rgba(255,255,255,0.95))
+                                        drop-shadow(0 0 20px rgba(255,255,255,0.85))
+                                        drop-shadow(0 0 40px rgba(255,255,255,0.65))
+                                        drop-shadow(0 0 70px rgba(100,181,246,0.60))
+                                        drop-shadow(0 10px 30px rgba(0,0,0,0.50))
+                                        brightness(1.12)
+                                        contrast(1.08);
+                                    ">
                     </div>
 
                     {{-- Floating card 2 — di bawah logo --}}
-                    <div style="background:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite 1.5s;align-self:flex-end;margin-right:10px;" data-aos="fade-left" data-aos-delay="800">
+                    <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.60);border-radius:16px;padding:12px 18px;box-shadow:0 0 22px rgba(255,255,255,0.30),0 0 50px rgba(100,181,246,0.25),0 8px 24px rgba(0,0,0,0.20);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite 1.5s;align-self:flex-end;margin-right:10px;" data-aos="fade-left" data-aos-delay="800">
                         <div style="width:38px;height:38px;border-radius:10px;background:#e3f2fd;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-graph-up-arrow" style="color:#1565c0;font-size:18px;"></i></div>
-                        <div><div style="font-size:11px;color:#888;margin-bottom:1px;">Produktivitas TK</div><div style="font-size:13px;font-weight:700;color:#1a237e;">Terukur & Meningkat</div></div>
+                        <div><div style="font-size:11px;color:#666;font-weight:500;margin-bottom:1px;">Produktivitas TK</div><div style="font-size:13px;font-weight:700;color:#111;">Terukur & Meningkat</div></div>
                     </div>
                 </div>
             </div>
