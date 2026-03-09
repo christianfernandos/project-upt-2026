@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\ProgramKegiatanController;
 use App\Http\Controllers\Admin\KalkulatorController;
 use App\Http\Controllers\Admin\BeritaController;
+use App\Http\Controllers\Admin\HeroSlideController;
 
 // ======== FRONT-END PUBLIC ========
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -81,6 +82,14 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/berita/{id}/edit',  [BeritaController::class, 'edit'])->name('admin.berita.edit');
     Route::put('admin/berita/{id}',       [BeritaController::class, 'update'])->name('admin.berita.update');
     Route::delete('admin/berita/{id}',    [BeritaController::class, 'destroy'])->name('admin.berita.destroy');
+
+    // Hero Slides (CRUD)
+    Route::get('admin/hero-slide',            [HeroSlideController::class, 'index'])->name('admin.hero-slide.index');
+    Route::get('admin/hero-slide/create',     [HeroSlideController::class, 'create'])->name('admin.hero-slide.create');
+    Route::post('admin/hero-slide',           [HeroSlideController::class, 'store'])->name('admin.hero-slide.store');
+    Route::get('admin/hero-slide/{id}/edit',  [HeroSlideController::class, 'edit'])->name('admin.hero-slide.edit');
+    Route::put('admin/hero-slide/{id}',       [HeroSlideController::class, 'update'])->name('admin.hero-slide.update');
+    Route::delete('admin/hero-slide/{id}',    [HeroSlideController::class, 'destroy'])->name('admin.hero-slide.destroy');
 });
 
 

@@ -66,6 +66,14 @@
                 <span style="font-size:11.5px; font-weight:600;">Berita</span>
             </a>
         </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="{{ route('admin.hero-slide.index') }}"
+               class="btn btn-outline-secondary w-100 d-flex flex-column align-items-center justify-content-center py-3 gap-2"
+               style="border-radius:14px; border-width:2px; min-height:90px;">
+                <i class="ph ph-images" style="font-size:28px;"></i>
+                <span style="font-size:11.5px; font-weight:600;">Hero Slider</span>
+            </a>
+        </div>
     </div>
 
     <div class="row g-4">

@@ -579,6 +579,13 @@
                             <span class="pc-mtext">Berita</span>
                         </a>
                     </li>
+                    {{-- Hero Slider --}}
+                    <li class="pc-item {{ Request::routeIs('admin.hero-slide.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hero-slide.index') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ph ph-images"></i></span>
+                            <span class="pc-mtext">Hero Slider</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

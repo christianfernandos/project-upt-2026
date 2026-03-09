@@ -200,54 +200,23 @@
                 flex-shrink:0;
             ">
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <!-- Logo Pemprov Jatim SVG -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 72" width="30" height="36"
-                         style="flex-shrink:0;" title="Pemprov Jawa Timur">
-                        <path d="M30 2 L56 12 L56 42 Q56 62 30 70 Q4 62 4 42 L4 12 Z" fill="#cc0000" stroke="rgba(200,0,0,0.3)" stroke-width="1.5"/>
-                        <polygon points="30,14 33,22 41,22 35,27 37,35 30,30 23,35 25,27 19,22 27,22" fill="#FFD700"/>
-                        <rect x="14" y="50" width="32" height="11" rx="2" fill="rgba(255,255,255,0.9)"/>
-                        <text x="30" y="59" text-anchor="middle" font-size="5.2" font-weight="700" fill="#cc0000" font-family="Arial">JAWA TIMUR</text>
-                    </svg>
+                    <!-- Logo Pemprov Jawa Timur -->
+                    <img src="{{ asset('asset/img/logo-pemprov-jatim.png') }}"
+                         alt="Lambang Pemerintah Provinsi Jawa Timur"
+                         style="height:42px; width:auto; flex-shrink:0; object-fit:contain;"
+                         title="Pemerintah Provinsi Jawa Timur">
                     <!-- Divider -->
                     <div style="width:1px;height:34px;background:rgba(1,41,112,0.12);"></div>
-                    <!-- Logo Disnakertrans SVG -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 72" width="30" height="36"
-                         style="flex-shrink:0;" title="Disnakertrans Jatim">
-                        <path d="M30 2 L56 12 L56 42 Q56 62 30 70 Q4 62 4 42 L4 12 Z" fill="#0d47a1" stroke="rgba(13,71,161,0.3)" stroke-width="1.5"/>
-                        <circle cx="30" cy="35" r="12" fill="none" stroke="#FFD700" stroke-width="3"/>
-                        <circle cx="30" cy="35" r="5"  fill="#FFD700"/>
-                        <rect x="28" y="17" width="4" height="6" rx="2" fill="#FFD700"/>
-                        <rect x="28" y="47" width="4" height="6" rx="2" fill="#FFD700"/>
-                        <rect x="16" y="33" width="6" height="4" rx="2" fill="#FFD700"/>
-                        <rect x="38" y="33" width="6" height="4" rx="2" fill="#FFD700"/>
-                    </svg>
+                    <!-- Logo Disnakertrans Jawa Timur -->
+                    <img src="{{ asset('asset/img/logo-disnakertrans-jatim.png') }}"
+                         alt="Dinas Tenaga Kerja dan Transmigrasi Provinsi Jawa Timur"
+                         style="height:38px; width:auto; flex-shrink:0; object-fit:contain;"
+                         title="Disnakertrans Provinsi Jawa Timur">
                     <!-- Divider -->
                     <div style="width:1px;height:34px;background:rgba(1,41,112,0.12);"></div>
                     <!-- Logo UPT -->
                     <img src="{{ asset('asset/img/logo-upt.png') }}" alt="Logo UPT BLP2TK"
                          style="height:32px;width:auto;flex-shrink:0;object-fit:contain;">
-                    <!-- Teks -->
-                    <div style="display:flex;flex-direction:column;justify-content:center;">
-                        <div style="
-                            font-family:'Poppins',sans-serif;
-                            font-weight:800;
-                            font-size:14px;
-                            color:#1a237e;
-                            letter-spacing:0.2px;
-                            white-space:nowrap;
-                            line-height:1.2;
-                        ">UPT BLP2TK <span style="color:#1976d2;">Surabaya</span></div>
-                        <div style="
-                            font-family:'Poppins',sans-serif;
-                            font-size:8px;
-                            font-weight:500;
-                            color:#888;
-                            letter-spacing:0.5px;
-                            text-transform:uppercase;
-                            white-space:nowrap;
-                            line-height:1.3;
-                        ">Balai Latihan Pengembangan Produktivitas Tenaga Kerja</div>
-                    </div>
                 </div>
             </a>
 
@@ -336,7 +305,7 @@
                                onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='#8fa3be'">
                                 <i class="bi bi-facebook"></i>
                             </a>
-                            <a href="#" style="
+                            <a href="https://www.instagram.com/upt.blp2tk.surabaya" target="_blank" style="
                                 width:36px; height:36px; border-radius:50%;
                                 background:rgba(255,255,255,0.08);
                                 display:flex; align-items:center; justify-content:center;
@@ -378,21 +347,29 @@
                             <li style="display:flex; gap:12px; align-items:flex-start;">
                                 <i class="bi bi-geo-alt-fill" style="color:#42a5f5; font-size:16px; margin-top:2px; flex-shrink:0;"></i>
                                 <span style="font-size:13px; color:#8fa3be; line-height:1.7;">
-                                    Jl. Bendul Merisi No.2, Jagir,<br>Kec. Wonokromo,<br>Surabaya, Jawa Timur 60244
+                                    Jalan Bendul Merisi No. 2,<br>Wonokromo, Surabaya,<br>Jawa Timur 60244
                                 </span>
                             </li>
                             <li style="display:flex; gap:12px; align-items:center;">
                                 <i class="bi bi-telephone-fill" style="color:#42a5f5; font-size:15px; flex-shrink:0;"></i>
-                                <a href="tel:+62318415260" style="font-size:13px; color:#8fa3be; text-decoration:none;"
+                                <a href="tel:+62319985187" style="font-size:13px; color:#8fa3be; text-decoration:none;"
                                    onmouseover="this.style.color='#42a5f5'" onmouseout="this.style.color='#8fa3be'">
-                                    (031) 8415260
+                                    (031) 99851817
                                 </a>
                             </li>
                             <li style="display:flex; gap:12px; align-items:center;">
                                 <i class="bi bi-envelope-fill" style="color:#42a5f5; font-size:15px; flex-shrink:0;"></i>
-                                <a href="mailto:uptblp2tksurabaya@gmail.com" style="font-size:13px; color:#8fa3be; text-decoration:none; word-break:break-all;"
+                                <a href="mailto:uptpptkjatim@gmail.com" style="font-size:13px; color:#8fa3be; text-decoration:none; word-break:break-all;"
                                    onmouseover="this.style.color='#42a5f5'" onmouseout="this.style.color='#8fa3be'">
-                                    uptblp2tksurabaya@gmail.com
+                                    uptpptkjatim@gmail.com
+                                </a>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:center;">
+                                <i class="bi bi-instagram" style="color:#42a5f5; font-size:15px; flex-shrink:0;"></i>
+                                <a href="https://www.instagram.com/upt.blp2tk.surabaya" target="_blank"
+                                   style="font-size:13px; color:#8fa3be; text-decoration:none;"
+                                   onmouseover="this.style.color='#42a5f5'" onmouseout="this.style.color='#8fa3be'">
+                                    @upt.blp2tk.surabaya
                                 </a>
                             </li>
                             <li style="display:flex; gap:12px; align-items:center;">
@@ -411,7 +388,7 @@
                         </h6>
                         <div style="border-radius:10px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.7!2d112.7350!3d-7.3150!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTgnNTQuMCJTIDExMsKwNDQnMDYuMCJF!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6872743508!2d112.72694397499!3d-7.315909292682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb6b0b3b3b3b%3A0x0!2sJl.+Bendul+Merisi+No.2%2C+Jagir%2C+Kec.+Wonokromo%2C+Kota+Surabaya%2C+Jawa+Timur+60244!5e0!3m2!1sid!2sid!4v1709900000000!5m2!1sid!2sid"
                                 width="100%" height="170" style="border:0; display:block;"
                                 allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade">

@@ -2,35 +2,61 @@
 @section('title', 'UPT Balai Latihan Pengembangan Produktivitas Tenaga Kerja Surabaya')
 @section('content')
 
-{{-- ============================================================ HERO ============================================================ --}}
-<section id="hero" style="
-    background: linear-gradient(135deg, #0d1b4b 0%, #1a237e 45%, #1565c0 100%);
-    min-height: 100vh; display: flex; align-items: center;
-    position: relative; overflow: hidden;
-    padding: clamp(60px,10vw,100px) 0;
-">
-    <div aria-hidden="true" style="position:absolute;top:-80px;right:-80px;width:clamp(220px,30vw,480px);height:clamp(220px,30vw,480px);border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;"></div>
-    <div aria-hidden="true" style="position:absolute;bottom:-60px;left:-60px;width:clamp(160px,22vw,340px);height:clamp(160px,22vw,340px);border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none;"></div>
+{{-- ============================================================ HERO SLIDER ============================================================ --}}
+@php
+    $slides = isset($heroSlides) && $heroSlides->count() > 0 ? $heroSlides : collect([]);
+    $slideImages = $slides->pluck('foto')->toArray();
+@endphp
 
-    <div class="container" style="position:relative;z-index:2;">
-        <div class="row align-items-center gy-5">
+{{-- Data gambar untuk JS --}}
+<script>
+    var heroImages = @json(array_map(fn($f) => asset('images/hero/'.$f), $slideImages));
+</script>
+
+<section id="hero" style="
+    height: calc(100vh - 64px);
+    min-height: 560px;
+    position: relative;
+    overflow: hidden;
+    background-image: url('{{ $slides->count() > 0 ? asset('images/hero/'.$slides->first()->foto) : '' }}');
+    background-size: cover;
+    background-position: center center;
+    background-color: #0d1b4b;
+    transition: background-image 0s;
+">
+    {{-- Overlay gelap --}}
+    <div id="heroOverlay" style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(120deg,rgba(5,10,40,0.78) 0%,rgba(10,25,80,0.55) 55%,rgba(0,0,0,0.30) 100%);z-index:1;"></div>
+
+    {{-- ===== KONTEN TEKS (overlay di atas semua slide) ===== --}}
+    <div style="position:relative;z-index:10;height:100%;display:flex;align-items:center;padding:clamp(40px,8vw,80px) 0;">
+        <div class="container">
+            <div class="row align-items-center gy-5">
 
             {{-- Teks --}}
-            <div class="col-lg-6" data-aos="fade-right">
-                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:6px 16px;border-radius:30px;margin-bottom:24px;">
-                    <span style="width:7px;height:7px;border-radius:50%;background:#64b5f6;display:inline-block;"></span>
-                    <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:1px;text-transform:uppercase;">Dinas Tenaga Kerja Kota Surabaya</span>
+            <div class="col-lg-7 col-xl-6" data-aos="fade-right">
+
+                {{-- Judul utama (statis UPT) --}}
+                <div style="font-family:'Poppins',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;color:rgba(255,255,255,0.85);line-height:1.3;margin-bottom:4px;">
+                    UPT Balai Latihan Pengembangan Produktivitas
                 </div>
-                <h1 style="font-family:'Poppins',sans-serif;font-size:clamp(1.7rem,4vw,2.9rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:20px;">
-                    UPT Balai Latihan<br>
-                    <span style="color:#64b5f6;">Pengembangan Produktivitas</span><br>
+                <div style="font-family:'Poppins',sans-serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;">
                     Tenaga Kerja Surabaya
-                </h1>
-                <p style="font-size:clamp(14px,1.5vw,16px);color:rgba(255,255,255,0.75);line-height:1.8;margin-bottom:32px;max-width:520px;">
-                    Meningkatkan kualitas dan kompetensi sumber daya manusia agar mampu bersaing
-                    di pasar tenaga kerja nasional maupun global melalui pelatihan berbasis kompetensi
-                    dan pengembangan produktivitas terukur.
+                </div>
+
+                {{-- Judul slide dinamis --}}
+                <h2 id="heroSlideTitle"
+                    style="font-family:'Poppins',sans-serif;font-size:clamp(1rem,2.2vw,1.35rem);font-weight:700;
+                           color:#f47c20;line-height:1.4;margin-bottom:6px;min-height:1.4em;
+                           transition:opacity 0.4s ease;">
+                    {{ $slides->count() > 0 ? $slides->first()->judul : 'Pelatihan Berbasis Kompetensi' }}
+                </h2>
+                <p id="heroSlideSubtitle"
+                   style="font-size:clamp(13px,1.5vw,15.5px);color:rgba(255,255,255,0.72);
+                          line-height:1.8;margin-bottom:32px;max-width:520px;min-height:2em;
+                          transition:opacity 0.4s ease;">
+                    {{ $slides->count() > 0 ? $slides->first()->subjudul : 'Meningkatkan kualitas dan kompetensi sumber daya manusia agar mampu bersaing di pasar tenaga kerja.' }}
                 </p>
+
                 <div style="display:flex;flex-wrap:wrap;gap:14px;">
                     <a href="{{ route('program-kegiatan') }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#1a237e;font-weight:700;font-size:14px;padding:13px 28px;border-radius:30px;text-decoration:none;transition:all 0.25s;box-shadow:0 6px 24px rgba(0,0,0,0.2);"
                        onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
@@ -41,21 +67,16 @@
                         <i class="bi bi-info-circle"></i> Tentang Kami
                     </a>
                 </div>
-
             </div>
 
             {{-- Ilustrasi --}}
-            <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="200">
+            <div class="col-lg-5 col-xl-6 text-center d-none d-lg-block" data-aos="fade-left" data-aos-delay="200">
                 <div style="display:inline-flex;flex-direction:column;align-items:center;gap:20px;position:relative;">
                     {{-- Lingkaran dekoratif --}}
                     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(280px,38vw,460px);height:clamp(280px,38vw,460px);border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);pointer-events:none;"></div>
                     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(180px,26vw,320px);height:clamp(180px,26vw,320px);border-radius:50%;background:rgba(255,255,255,0.07);pointer-events:none;"></div>
 
                     {{-- Floating card 1 — di atas logo --}}
-                    <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.60);border-radius:16px;padding:12px 18px;box-shadow:0 0 22px rgba(255,255,255,0.30),0 0 50px rgba(100,181,246,0.25),0 8px 24px rgba(0,0,0,0.20);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite;align-self:flex-start;margin-left:10px;" data-aos="fade-right" data-aos-delay="600">
-                        <div style="width:38px;height:38px;border-radius:10px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-award-fill" style="color:#2e7d32;font-size:18px;"></i></div>
-                        <div><div style="font-size:11px;color:#666;font-weight:500;margin-bottom:1px;">Sertifikasi</div><div style="font-size:13px;font-weight:700;color:#111;">Berbasis Kompetensi</div></div>
-                    </div>
 
                     {{-- Logo utama --}}
                     <div style="position:relative;z-index:2;">
@@ -74,16 +95,143 @@
                     </div>
 
                     {{-- Floating card 2 — di bawah logo --}}
-                    <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.60);border-radius:16px;padding:12px 18px;box-shadow:0 0 22px rgba(255,255,255,0.30),0 0 50px rgba(100,181,246,0.25),0 8px 24px rgba(0,0,0,0.20);z-index:5;display:inline-flex;align-items:center;gap:10px;animation:floatCard 3s ease-in-out infinite 1.5s;align-self:flex-end;margin-right:10px;" data-aos="fade-left" data-aos-delay="800">
-                        <div style="width:38px;height:38px;border-radius:10px;background:#e3f2fd;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-graph-up-arrow" style="color:#1565c0;font-size:18px;"></i></div>
-                        <div><div style="font-size:11px;color:#666;font-weight:500;margin-bottom:1px;">Produktivitas TK</div><div style="font-size:13px;font-weight:700;color:#111;">Terukur & Meningkat</div></div>
-                    </div>
                 </div>
             </div>
-        </div>
+        </div>{{-- /row --}}
+        </div>{{-- /container --}}
+    </div>{{-- /konten overlay --}}
+
+    {{-- ===== NAVIGASI PANAH ===== --}}
+    {{-- dihapus --}}
+
+    {{-- ===== DOTS ===== --}}
+    <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:20;" id="heroDots">
+        @foreach($slides as $i => $sl)
+        <button onclick="heroGoTo({{ $i }})"
+            id="heroDot{{ $i }}"
+            aria-label="Slide {{ $i+1 }}"
+            style="
+                width:{{ $i===0 ? '28px' : '10px' }};height:10px;border-radius:6px;border:none;padding:0;cursor:pointer;transition:all 0.35s;
+                background:{{ $i===0 ? '#fff' : 'rgba(255,255,255,0.4)' }};
+        "></button>
+        @endforeach
     </div>
+
+    {{-- ===== PROGRESS BAR ===== --}}
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.15);z-index:20;">
+        <div id="heroProgress" style="height:100%;background:#64b5f6;width:0%;transition:width 5s linear;"></div>
+    </div>
+
+    {{-- ===== TEKS SLIDE DINAMIS (judul & subjudul dari DB) ===== --}}
+    @if($slides->count() > 0)
+    <div id="heroSlideTexts" style="display:none;">
+        @foreach($slides as $sl)
+        <div data-index="{{ $loop->index }}"
+             data-judul="{{ $sl->judul }}"
+             data-subjudul="{{ $sl->subjudul }}">
+        </div>
+        @endforeach
+    </div>
+    @endif
+
 </section>
-<style>@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}html{scroll-behavior:smooth;}</style>
+
+<style>
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+html{scroll-behavior:smooth;}
+</style>
+
+{{-- ===== SCRIPT HERO SLIDER ===== --}}
+@push('js')
+<script>
+(function(){
+    var sec      = document.getElementById('hero');
+    var progress = document.getElementById('heroProgress');
+    var currNum  = document.getElementById('heroCurrentNum');
+    var dotsEl   = document.querySelectorAll('[id^="heroDot"]');
+    var textItems= document.querySelectorAll('#heroSlideTexts [data-index]');
+    var titleEl  = document.getElementById('heroSlideTitle');
+    var subEl    = document.getElementById('heroSlideSubtitle');
+    var total    = (typeof heroImages !== 'undefined') ? heroImages.length : 0;
+
+    if(!sec || total < 1) return;
+
+    var current = 0, timer, preloaded = {};
+
+    // Preload all images
+    heroImages.forEach(function(src, i){
+        var img = new Image();
+        img.src = src;
+        preloaded[i] = src;
+    });
+
+    function goTo(n){
+        current = ((n % total) + total) % total;
+
+        // Ganti background-image section dengan fade
+        sec.style.opacity = '0.6';
+        sec.style.transition = 'opacity 0.3s ease';
+        setTimeout(function(){
+            sec.style.backgroundImage = "url('" + heroImages[current] + "')";
+            sec.style.opacity = '1';
+        }, 300);
+
+        // Dots
+        dotsEl.forEach(function(d, i){
+            d.style.width      = i === current ? '28px' : '10px';
+            d.style.background = i === current ? '#fff' : 'rgba(255,255,255,0.4)';
+        });
+
+        // Counter
+        if(currNum) currNum.textContent = current + 1;
+
+        // Teks dinamis
+        if(textItems.length && titleEl && subEl){
+            textItems.forEach(function(t){
+                if(parseInt(t.dataset.index) === current){
+                    titleEl.style.opacity = '0';
+                    subEl.style.opacity   = '0';
+                    setTimeout(function(){
+                        titleEl.textContent  = t.dataset.judul    || '';
+                        subEl.textContent    = t.dataset.subjudul || '';
+                        titleEl.style.opacity = '1';
+                        subEl.style.opacity   = '1';
+                    }, 250);
+                }
+            });
+        }
+
+        startProgress();
+    }
+
+    function startProgress(){
+        if(!progress) return;
+        progress.style.transition = 'none';
+        progress.style.width      = '0%';
+        void progress.offsetWidth;
+        progress.style.transition = 'width 5s linear';
+        progress.style.width      = '100%';
+    }
+
+    function autoPlay(){ timer = setInterval(function(){ goTo(current + 1); }, 5000); }
+    function reset(){ clearInterval(timer); autoPlay(); }
+
+    window.heroSlide = function(d){ goTo(current + d); reset(); };
+    window.heroGoTo  = function(n){ goTo(n); reset(); };
+
+    // Touch/swipe support
+    var sx = 0;
+    sec.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+    sec.addEventListener('touchend',   function(e){
+        var dx = sx - e.changedTouches[0].clientX;
+        if(Math.abs(dx) > 40) heroSlide(dx > 0 ? 1 : -1);
+    });
+
+    startProgress();
+    autoPlay();
+})();
+</script>
+@endpush
 
 <main id="main">
 
@@ -284,7 +432,7 @@ $slideIcons=['bi-award-fill','bi-people-fill','bi-gear-fill','bi-building','bi-j
 </section>
 
 {{-- ============================================================ CTA BANNER ============================================================ --}}
-<section style="background:linear-gradient(135deg,#0d1b4b 0%,#1a237e 50%,#1565c0 100%);padding:clamp(48px,7vw,80px) 0;position:relative;overflow:hidden;">
+<section style="background:linear-gradient(135deg,#c0390b 0%,#f47c20 60%,#f9a825 100%);padding:clamp(48px,7vw,80px) 0;position:relative;overflow:hidden;">
     <div aria-hidden="true" style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;"></div>
     <div class="container text-center" style="position:relative;z-index:1;" data-aos="fade-up">
         <i class="bi bi-rocket-takeoff-fill" style="font-size:3rem;color:#64b5f6;margin-bottom:20px;display:block;"></i>
